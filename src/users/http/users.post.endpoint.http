@@ -1,0 +1,11 @@
+POST http://localhost:3000/users/
+Content-Type: application/json
+{
+    "name" : "Fabricio",
+    "email":"Fabricio@email.com",
+    "password":"Professor@1",
+    "dateBirth": "2001-03-16T07:46:32+00:00",
+    "cpf":"44455566678",
+    "cellphone":"12987654321",
+    "registrationNumber": 1234567892
+}
