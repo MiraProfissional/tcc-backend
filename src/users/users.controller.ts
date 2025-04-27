@@ -2,13 +2,16 @@ import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { GetUsersParamDto } from './dtos/get-users-param.dto';
 import { PatchUserDto } from './dtos/patch-user.dto';
+import { UsersService } from './providers/users.service';
 
 @Controller('users')
 export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
   @Get('/{:id}')
   public getUsers(@Param() getUsersParamDto?: GetUsersParamDto) {
     console.log(getUsersParamDto);
-    return 'You sent a GET request';
+    return this.usersService.findAll();
   }
 
   @Post()
