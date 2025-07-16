@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tcc-app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres_db
+    volumes:
+      - ./src:/usr/src/app/src
+    
+
+  postgres_db:
+    image: postgres
+    restart: on-failure
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=tcc-db
+    container_name: tcc-postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
