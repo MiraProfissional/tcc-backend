@@ -16,7 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       inject: [],
       useFactory: () => ({
         type: 'postgres',
-        entities: [],
+        autoLoadEntities: true,
 
         synchronize: true,
 
