@@ -31,7 +31,7 @@ export class ClassesService {
     ];
   }
 
-  public async createClass(createClassDto: CreateClassDto){
+  public async createClass(createClassDto: CreateClassDto) {
     const newClass = this.classesRepository.create(createClassDto);
     return await this.classesRepository.save(newClass);
   }

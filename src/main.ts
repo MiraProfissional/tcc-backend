@@ -13,7 +13,14 @@ async function bootstrap() {
     }),
   );
 
-  const config = new DocumentBuilder().setVersion('1.0').build();
+  const config = new DocumentBuilder()
+    .setTitle('Backend Web - Controle de Frequencia')
+    .setDescription('Use the base API URL as http://localhost:3000')
+    .setTermsOfService('http://localhost:3000/terms-of-service')
+    .setLicense('MIT Licence', 'https://mit-license.org/')
+    .addServer('http://localhost:3000')
+    .setVersion('1.0')
+    .build();
 
   const document = SwaggerModule.createDocument(app, config);
 
