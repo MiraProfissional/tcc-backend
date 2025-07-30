@@ -27,30 +27,17 @@ export class Class {
   code: string;
 
   @Column({
-    type: 'int',
+    type: 'varchar',
+    length: 24,
     nullable: false,
   })
-  semester: number;
+  semester: string;
 
   @Column('text', {
     array: true,
     nullable: false,
   })
-  day: string[];
-
-  @Column({
-    type: 'varchar',
-    length: 96,
-    nullable: false,
-  })
-  startTime: string;
-
-  @Column({
-    type: 'varchar',
-    length: 96,
-    nullable: false,
-  })
-  endTime: string;
+  classTime: string[];
 
   @Column({
     type: 'varchar',
