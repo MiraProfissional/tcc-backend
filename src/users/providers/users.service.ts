@@ -5,6 +5,9 @@ import { User } from '../user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
 
+/**
+ * Class to connect to Users table and perform business operations
+ */
 @Injectable()
 export class UsersService {
   constructor(
@@ -15,6 +18,9 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
+  /**
+   * The method to create a user in the database
+   */
   public async createUser(createUserDto: CreateUserDto) {
     const existingUser = await this.usersRepository.findOne({
       where: { email: createUserDto.email },
@@ -25,6 +31,9 @@ export class UsersService {
     return await this.usersRepository.save(newUser);
   }
 
+  /**
+   * The method to get all users from the database
+   */
   public findAll() {
     const auth = this.authService.isAuth();
     console.log(auth);
@@ -41,6 +50,9 @@ export class UsersService {
     ];
   }
 
+  /**
+   * The method to get one user from the database
+   */
   public findOneById(userId: string) {
     return {
       name: 'User 1',
