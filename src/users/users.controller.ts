@@ -32,18 +32,18 @@ export class UsersController {
     description: 'The position of the page that you want the API to return',
     example: 1,
   })
-  public getUsers(@Param() getUsersParamDto?: GetUsersParamDto) {
+  public get(@Param() getUsersParamDto?: GetUsersParamDto) {
     console.log(getUsersParamDto);
     return this.usersService.findAll();
   }
 
   @Post()
-  public postUsers(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto);
+  public post(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
 
   @Patch()
-  public patchUsers(@Body() patchUserDto: PatchUserDto) {
+  public patch(@Body() patchUserDto: PatchUserDto) {
     console.log(patchUserDto);
     return 'You sent a PATCH request';
   }

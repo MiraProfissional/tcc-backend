@@ -1,7 +1,7 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { AuthService } from 'src/auth/providers/auth.service';
-import { Repository } from 'typeorm';
-import { User } from '../user.entity';
+import { In, Repository } from 'typeorm';
+import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
 
@@ -21,7 +21,7 @@ export class UsersService {
   /**
    * The method to create a user in the database
    */
-  public async createUser(createUserDto: CreateUserDto) {
+  public async create(createUserDto: CreateUserDto) {
     const existingUser = await this.usersRepository.findOne({
       where: { email: createUserDto.email },
     });
@@ -58,5 +58,15 @@ export class UsersService {
       name: 'User 1',
       email: 'user1@email.com',
     };
+  }
+
+  public async findMutipleUsers(userIds: number[]) {
+    const users = this.usersRepository.find({
+      where: {
+        id: In(userIds),
+      },
+    });
+
+    return users;
   }
 }
