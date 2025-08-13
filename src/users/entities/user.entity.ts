@@ -6,9 +6,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { UserRole } from '../enums/user-role.enum';
 
 @Entity()
-export class User {
+export abstract class User {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -65,6 +66,12 @@ export class User {
     unique: true,
   })
   registrationNumber: number;
+
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+  })
+  userRole: UserRole;
 
   @CreateDateColumn()
   createDate: Date;
