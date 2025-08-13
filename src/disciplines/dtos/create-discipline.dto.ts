@@ -2,15 +2,17 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   ArrayNotEmpty,
   IsArray,
+  IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
-export class CreateClassDto {
+export class CreateDisciplineDto {
   @ApiProperty({
-    description: 'This is the name of the class',
+    description: 'This is the name of the discipline',
     example: 'Gerência de Projetos de Software',
   })
   @IsString()
@@ -20,7 +22,7 @@ export class CreateClassDto {
   name: string;
 
   @ApiProperty({
-    description: 'This is the code of the class',
+    description: 'This is the code of the discipline',
     example: 'SDES06',
   })
   @IsString()
@@ -30,7 +32,7 @@ export class CreateClassDto {
   code: string;
 
   @ApiProperty({
-    description: 'This is the semester of class',
+    description: 'This is the semester of discipline',
     example: '2025.1',
   })
   @IsString()
@@ -40,23 +42,23 @@ export class CreateClassDto {
   semester: string;
 
   @ApiProperty({
-    description: 'This is the day and time of the class',
-    example: "['5N34', '6N12']",
+    description: 'This is the day and time of the discipline',
+    example: ['5N34', '6N12'],
   })
   @IsArray()
   @ArrayNotEmpty()
   @IsString({ each: true })
-  classTime: string[];
+  disciplineTime: string[];
 
   @ApiProperty({
-    description: 'This is the code of the classroom',
+    description: "This is the code of the discipline's room",
     example: 'C1113',
   })
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(24)
-  classRoom: string;
+  disciplineRoom: string;
 
   @ApiProperty({
     description: "This is the camera's ip responsible to capture the students",
@@ -67,4 +69,21 @@ export class CreateClassDto {
   @MinLength(3)
   @MaxLength(24)
   ipCamera: string;
+
+  @ApiProperty({
+    description: 'This is the students of the discipline',
+    example: [1, 2],
+  })
+  @IsInt()
+  @IsNotEmpty()
+  teacher: number;
+
+  @ApiProperty({
+    description: 'These are the students of the discipline',
+    example: [1, 2],
+  })
+  @IsInt({ each: true })
+  @IsArray()
+  @IsOptional()
+  students?: number[];
 }

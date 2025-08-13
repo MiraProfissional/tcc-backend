@@ -1,0 +1,13 @@
+POST http://localhost:3000/disciplines/
+Content-Type: application/json
+
+{
+    "name" :"Algoritmos e Estruturas de Dados II",
+    "code": "ALG02",
+    "semester": 1,
+    "day": ["5N34", "6N12"],
+    "startTime": "13h30",
+    "endTime": "15h45",
+    "classRoom": "C1105",
+    "ipCamera": "1.1.1.100"
+}
