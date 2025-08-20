@@ -1,0 +1,15 @@
+POST http://localhost:3000/users/aluno/
+Content-Type: application/json
+
+{
+    "firstName" :"Jonathan",
+    "lastName":"Jesus",
+    "email":"Jonathan@email.com",
+    "password":"AlunoSenha@1",
+    "dateBirth":"2001-03-16T07:46:32+00:00",
+    "cpf":"44455566678",
+    "cellphone":"12987654321",
+    "registrationNumber": 1234567891,
+    "course": "Ciencia da Computacao",
+    "userRole": "STUDENT"
+}

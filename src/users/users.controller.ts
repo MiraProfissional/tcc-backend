@@ -1,9 +1,19 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
-import { CreateUserDto } from './dtos/create-user.dto';
-import { GetUsersParamDto } from './dtos/get-users-param.dto';
-import { PatchUserDto } from './dtos/patch-user.dto';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { CreateUserDto } from './dtos/users/create-user.dto';
+import { GetUsersParamDto } from './dtos/users/get-users-param.dto';
+import { PatchUserDto } from './dtos/users/patch-user.dto';
 import { UsersService } from './providers/users.service';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CreateStudentDto } from './dtos/students/create-student.dto';
+import { CreateTeacherDto } from './dtos/teachers/create-teacher.dto';
 
 @Controller('users')
 @ApiTags('Users')
@@ -37,9 +47,14 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Post()
-  public post(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @Post('/aluno')
+  public postStudent(@Body() createStudentDto: CreateStudentDto) {
+    return this.usersService.createStudent(createStudentDto);
+  }
+
+  @Post('/professor')
+  public postTeacher(@Body() createTeacherDto: CreateTeacherDto) {
+    return this.usersService.createTeacher(createTeacherDto);
   }
 
   @Patch()
