@@ -8,7 +8,9 @@ import {
   Matches,
   IsISO8601,
   IsInt,
+  IsEnum,
 } from 'class-validator';
+import { UserRole } from 'src/users/enums/user-role.enum';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -88,4 +90,13 @@ export class CreateUserDto {
   @IsInt()
   @IsNotEmpty()
   registrationNumber: number;
+
+  @ApiProperty({
+    description: "This is the user's role",
+    example: 'TEACHER',
+    enum: UserRole,
+  })
+  @IsEnum(UserRole)
+  @IsNotEmpty()
+  userRole: UserRole;
 }
