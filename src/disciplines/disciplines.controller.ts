@@ -37,6 +37,6 @@ export class DisciplinesController {
   })
   @Patch()
   public patch(@Body() patchDisciplineDto: PatchDisciplineDTO) {
-    return this.disciplinesService.update(patchDisciplineDto);
+    return 'this.disciplinesService.update(patchDisciplineDto);';
   }
 }
