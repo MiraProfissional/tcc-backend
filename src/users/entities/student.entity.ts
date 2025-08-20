@@ -1,4 +1,4 @@
-import { Entity, ManyToMany } from 'typeorm';
+import { Column, Entity, ManyToMany } from 'typeorm';
 import { User } from './user.entity';
 import { Discipline } from 'src/disciplines/discipline.entity';
 
@@ -6,4 +6,10 @@ import { Discipline } from 'src/disciplines/discipline.entity';
 export class Student extends User {
   @ManyToMany(() => Discipline, (discipline) => discipline.students)
   disciplines: Discipline[];
+
+  @Column({
+    type: 'varchar',
+    nullable: false,
+  })
+  course: string;
 }
