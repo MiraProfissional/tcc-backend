@@ -42,14 +42,14 @@ export class Discipline {
     array: true,
     nullable: false,
   })
-  classTime: string[];
+  disciplineTime: string[];
 
   @Column({
     type: 'varchar',
     length: 24,
     nullable: false,
   })
-  classRoom: string;
+  disciplineRoom: string;
 
   @Column({
     type: 'varchar',
@@ -58,10 +58,14 @@ export class Discipline {
   })
   ipCamera: string;
 
-  @ManyToOne(() => Teacher, (teacher) => teacher.disciplines)
+  @ManyToOne(() => Teacher, (teacher) => teacher.disciplines, {
+    eager: true,
+  })
   teacher: Teacher;
 
-  @ManyToMany(() => Student, (student) => student.disciplines)
+  @ManyToMany(() => Student, (student) => student.disciplines, {
+    eager: true,
+  })
   @JoinTable()
   students?: Student[];
 
