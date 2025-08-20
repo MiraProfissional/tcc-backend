@@ -1,14 +1,14 @@
-POST http://localhost:3000/users/professor
+POST http://localhost:3000/users/teacher
 Content-Type: application/json
 
 {
-    "firstName" :"Joao",
+    "firstName" :"Maria",
     "lastName":"Mira",
-    "email":"JoaoMira@email.com",
+    "email":"MariaMira@email.com",
     "password":"Professor@1",
     "dateBirth":"2001-03-16T07:46:32+00:00",
     "cpf":"44455566678",
     "cellphone":"12987654321",
-    "registrationNumber": 1234567892,
+    "registrationNumber": 1234567893,
     "userRole": "TEACHER"
 }

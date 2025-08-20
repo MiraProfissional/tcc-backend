@@ -1,13 +1,14 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
 } from '@nestjs/common';
-import { CreateUserDto } from './dtos/users/create-user.dto';
 import { GetUsersParamDto } from './dtos/users/get-users-param.dto';
 import { PatchUserDto } from './dtos/users/patch-user.dto';
 import { UsersService } from './providers/users.service';
@@ -47,12 +48,12 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Post('/aluno')
+  @Post('/student')
   public postStudent(@Body() createStudentDto: CreateStudentDto) {
     return this.usersService.createStudent(createStudentDto);
   }
 
-  @Post('/professor')
+  @Post('/teacher')
   public postTeacher(@Body() createTeacherDto: CreateTeacherDto) {
     return this.usersService.createTeacher(createTeacherDto);
   }
@@ -61,5 +62,25 @@ export class UsersController {
   public patch(@Body() patchUserDto: PatchUserDto) {
     console.log(patchUserDto);
     return 'You sent a PATCH request';
+  }
+
+  @Delete('/student')
+  public deleteStudent(@Query('id', ParseIntPipe) id: number) {
+    return this.usersService.deleteStudent(id);
+  }
+
+  @Delete('/student/soft-delete')
+  public softDeleteStudent(@Query('id', ParseIntPipe) id: number) {
+    return this.usersService.softDeleteStudent(id);
+  }
+
+  @Delete('/teacher')
+  public deleteTeacher(@Query('id', ParseIntPipe) id: number) {
+    return this.usersService.deleteTeacher(id);
+  }
+
+  @Delete('/teacher/soft-delete')
+  public softDeleteTeacher(@Query('id', ParseIntPipe) id: number) {
+    return this.usersService.softDeleteTeacher(id);
   }
 }

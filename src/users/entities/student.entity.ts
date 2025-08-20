@@ -4,7 +4,9 @@ import { Discipline } from 'src/disciplines/discipline.entity';
 
 @Entity()
 export class Student extends User {
-  @ManyToMany(() => Discipline, (discipline) => discipline.students)
+  @ManyToMany(() => Discipline, (discipline) => discipline.students, {
+    onDelete: 'CASCADE',
+  })
   disciplines: Discipline[];
 
   @Column({

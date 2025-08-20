@@ -1,4 +1,4 @@
-PATCH http://localhost:3000/users/aluno/
+PATCH http://localhost:3000/users/student/
 Content-Type: application/json
 {
     "id": 3,

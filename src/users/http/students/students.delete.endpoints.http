@@ -1,0 +1,5 @@
+DELETE http://localhost:3000/users/student/
+?id=3
+
+DELETE http://localhost:3000/users/student/soft-delete/
+?id=6

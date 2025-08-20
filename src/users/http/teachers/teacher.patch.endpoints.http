@@ -1,4 +1,4 @@
-PATCH http://localhost:3000/users/
+PATCH http://localhost:3000/users/teacher
 Content-Type: application/json
 {
     "name" : "Fabricio",

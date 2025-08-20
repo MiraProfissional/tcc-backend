@@ -176,23 +176,51 @@ export class UsersService {
     return teachers;
   }
 
-  public async findMutipleUsers(userIds: number[], userType: UserType) {
-    let users: Array<Student | Teacher>;
+  /**
+   * The method to delete a student from the database
+   */
+  public async deleteStudent(studentId: number) {
+    await this.studentsRepository.delete(studentId);
 
-    if (userType == UserType.STUDENT) {
-      users = await this.studentsRepository.find({
-        where: {
-          id: In(userIds),
-        },
-      });
-    } else {
-      users = await this.teachersRepository.find({
-        where: {
-          id: In(userIds),
-        },
-      });
-    }
+    return {
+      deleted: true,
+      studentId,
+    };
+  }
 
-    return users;
+  /**
+   * The method to soft delete a student from the database
+   */
+  public async softDeleteStudent(studentId: number) {
+    await this.studentsRepository.softDelete(studentId);
+
+    return {
+      softDeleted: true,
+      studentId,
+    };
+  }
+
+  /**
+   * The method to delete a teacher from the database
+   */
+  public async deleteTeacher(teacherId: number) {
+    await this.teachersRepository.delete(teacherId);
+
+    return {
+      deleted: true,
+      teacherId,
+    };
+  }
+
+  /**
+   * The method to soft delete a teacher from the database
+   */
+  public async softDeleteTeacher(teacherId: number) {
+    await this.teachersRepository.softDelete(teacherId);
+
+    return {
+      softDeleted: true,
+      teacherId,
+    };
   }
 }
