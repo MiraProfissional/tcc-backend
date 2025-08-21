@@ -8,12 +8,10 @@ import {
 import { AuthService } from 'src/auth/providers/auth.service';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto } from '../dtos/users/create-user.dto';
 import { Teacher } from '../entities/teacher.entity';
 import { Student } from '../entities/student.entity';
 import { CreateTeacherDto } from '../dtos/teachers/create-teacher.dto';
 import { CreateStudentDto } from '../dtos/students/create-student.dto';
-import { UserType } from '../enums/user-type.enum';
 
 /**
  * Class to connect to Users table and perform business operations
