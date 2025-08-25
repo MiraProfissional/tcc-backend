@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/providers/users.service';
 import { Repository } from 'typeorm';
 import { Discipline } from '../discipline.entity';
@@ -7,6 +7,8 @@ import { PatchDisciplineDTO } from '../dtos/patch-discipline.dto';
 import { CreateDisciplineDto } from '../dtos/create-discipline.dto';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import { Student } from 'src/users/entities/student.entity';
+import { ConfigType } from '@nestjs/config';
+import cameraApiConfig from '../config/cameraApi.config';
 
 @Injectable()
 export class DisciplinesService {
@@ -15,9 +17,13 @@ export class DisciplinesService {
 
     @InjectRepository(Discipline)
     private disciplineRepository: Repository<Discipline>,
+
+    @Inject(cameraApiConfig.KEY)
+    private readonly cameraApiConfiguration: ConfigType<typeof cameraApiConfig>,
   ) {}
 
   public async findAll(userId: string) {
+    console.log(this.cameraApiConfiguration.apiLink);
     return await this.disciplineRepository.find();
   }
 
