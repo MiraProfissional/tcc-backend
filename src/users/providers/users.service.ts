@@ -96,7 +96,16 @@ export class UsersService {
 
     newStudent = this.studentsRepository.create(createStudentDto);
 
-    return await this.studentsRepository.save(newStudent);
+    try {
+      await this.studentsRepository.save(newStudent);
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    return newStudent;
   }
 
   /**
@@ -166,7 +175,16 @@ export class UsersService {
 
     newTeacher = this.teachersRepository.create(createTeacherDto);
 
-    return await this.teachersRepository.save(newTeacher);
+    try {
+      await this.teachersRepository.save(newTeacher);
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    return newTeacher;
   }
 
   /**
