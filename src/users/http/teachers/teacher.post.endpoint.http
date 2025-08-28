@@ -2,13 +2,13 @@ POST http://localhost:3000/users/teacher
 Content-Type: application/json
 
 {
-    "firstName" :"Maria",
+    "firstName" :"Mayer",
     "lastName":"Mira",
-    "email":"MariaMira@email.com",
+    "email":"MayerMira@email.com",
     "password":"Professor@1",
     "dateBirth":"2001-03-16T07:46:32+00:00",
     "cpf":"44455566678",
     "cellphone":"12987654321",
-    "registrationNumber": 1234567893,
+    "registrationNumber": 1234567892,
     "userRole": "TEACHER"
 }
