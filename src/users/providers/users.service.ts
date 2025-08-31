@@ -55,7 +55,7 @@ export class UsersService {
     }
 
     try {
-      existingStudentRegistrationNumber = await this.teachersRepository.findOne(
+      existingStudentRegistrationNumber = await this.studentsRepository.findOne(
         {
           where: { registrationNumber: createStudentDto.registrationNumber },
         },
@@ -221,6 +221,12 @@ export class UsersService {
       );
     }
 
+    if (!student) {
+      throw new BadRequestException(
+        'Student does not exist, please check the student ID',
+      );
+    }
+
     return student;
   }
 
@@ -239,6 +245,12 @@ export class UsersService {
       );
     }
 
+    if (!teacher) {
+      throw new BadRequestException(
+        'Teacher does not exist, please check the teacher ID',
+      );
+    }
+
     return teacher;
   }
 
@@ -246,13 +258,26 @@ export class UsersService {
    * The method to get multiple students from the database
    */
   public async findMultipleStudents(studentsIds: number[]) {
-    let students: Array<Student>;
+    let students: Array<Student> | null;
 
-    students = await this.studentsRepository.find({
-      where: {
-        id: In(studentsIds),
-      },
-    });
+    try {
+      students = await this.studentsRepository.find({
+        where: {
+          id: In(studentsIds),
+        },
+      });
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    if (!students) {
+      throw new BadRequestException(
+        "Some student's ID does not exist, please check the students IDs",
+      );
+    }
 
     return students;
   }
@@ -261,13 +286,26 @@ export class UsersService {
    * The method to get multiple teachers from the database
    */
   public async findMultipleTeachers(teachersIds: number[]) {
-    let teachers: Array<Teacher>;
+    let teachers: Array<Teacher> | null;
 
-    teachers = await this.teachersRepository.find({
-      where: {
-        id: In(teachersIds),
-      },
-    });
+    try {
+      teachers = await this.teachersRepository.find({
+        where: {
+          id: In(teachersIds),
+        },
+      });
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    if (!teachers) {
+      throw new BadRequestException(
+        "Some teacher's ID does not exist, please check the teachers IDs",
+      );
+    }
 
     return teachers;
   }
@@ -276,7 +314,33 @@ export class UsersService {
    * The method to delete a student from the database
    */
   public async deleteStudent(studentId: number) {
-    await this.studentsRepository.delete(studentId);
+    let studentExist: boolean;
+
+    try {
+      studentExist = await this.studentsRepository.exists({
+        where: { id: studentId },
+      });
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    if (!studentExist) {
+      throw new BadRequestException(
+        'Student does not exist, please check the student ID',
+      );
+    }
+
+    try {
+      await this.studentsRepository.delete(studentId);
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
 
     return {
       deleted: true,
@@ -288,7 +352,33 @@ export class UsersService {
    * The method to soft delete a student from the database
    */
   public async softDeleteStudent(studentId: number) {
-    await this.studentsRepository.softDelete(studentId);
+    let studentExist: boolean;
+
+    try {
+      studentExist = await this.studentsRepository.exists({
+        where: { id: studentId },
+      });
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    if (!studentExist) {
+      throw new BadRequestException(
+        'Student does not exist, please check the student ID',
+      );
+    }
+
+    try {
+      await this.studentsRepository.softDelete(studentId);
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
 
     return {
       softDeleted: true,
@@ -300,7 +390,33 @@ export class UsersService {
    * The method to delete a teacher from the database
    */
   public async deleteTeacher(teacherId: number) {
-    await this.teachersRepository.delete(teacherId);
+    let teacherExist: boolean;
+
+    try {
+      teacherExist = await this.studentsRepository.exists({
+        where: { id: teacherId },
+      });
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    if (!teacherExist) {
+      throw new BadRequestException(
+        'Teacher does not exist, please check the student ID',
+      );
+    }
+
+    try {
+      await this.teachersRepository.delete(teacherId);
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
 
     return {
       deleted: true,
@@ -312,7 +428,33 @@ export class UsersService {
    * The method to soft delete a teacher from the database
    */
   public async softDeleteTeacher(teacherId: number) {
-    await this.teachersRepository.softDelete(teacherId);
+    let teacherExist: boolean;
+
+    try {
+      teacherExist = await this.studentsRepository.exists({
+        where: { id: teacherId },
+      });
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    if (!teacherExist) {
+      throw new BadRequestException(
+        'Teacher does not exist, please check the student ID',
+      );
+    }
+
+    try {
+      await this.teachersRepository.softDelete(teacherId);
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
 
     return {
       softDeleted: true,
