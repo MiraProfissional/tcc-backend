@@ -1,8 +1,17 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { DisciplinesService } from './providers/disciplines.service';
 import { CreateDisciplineDto } from './dtos/create-discipline.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PatchDisciplineDTO } from './dtos/patch-discipline.dto';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 
 @Controller('disciplines')
 @ApiTags('Disciplines')
@@ -10,7 +19,11 @@ export class DisciplinesController {
   constructor(private readonly disciplinesService: DisciplinesService) {}
 
   @Get('/{:userId}')
-  public getPosts(@Param('userId') userId: string) {
+  public getPosts(
+    @Param('userId') userId: string,
+    @Query() paginationQueryDto: PaginationQueryDto,
+  ) {
+    console.log(paginationQueryDto);
     return this.disciplinesService.findAll(userId);
   }
 

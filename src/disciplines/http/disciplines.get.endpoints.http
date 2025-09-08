@@ -1,1 +1,3 @@
-GET http://localhost:3000/disciplines/123
+GET http://localhost:3000/disciplines/
+ ?limit=10
+ &page=1
