@@ -10,6 +10,7 @@ import { Student } from 'src/users/entities/student.entity';
 import { ConfigType } from '@nestjs/config';
 import cameraApiConfig from '../config/cameraApi.config';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 
 @Injectable()
 export class DisciplinesService {
@@ -19,18 +20,22 @@ export class DisciplinesService {
     @InjectRepository(Discipline)
     private disciplineRepository: Repository<Discipline>,
 
+    private readonly paginationProvider: PaginationProvider,
+
     @Inject(cameraApiConfig.KEY)
     private readonly cameraApiConfiguration: ConfigType<typeof cameraApiConfig>,
   ) {}
 
   public async findAll(userId: string, paginationQueryDto: PaginationQueryDto) {
-    const page = paginationQueryDto.page ?? 1;
-    const limit = paginationQueryDto.limit ?? 10;
+    const disciplines = await this.paginationProvider.paginateQuery(
+      {
+        limit: paginationQueryDto.limit,
+        page: paginationQueryDto.page,
+      },
+      this.disciplineRepository,
+    );
 
-    return await this.disciplineRepository.find({
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+    return disciplines;
   }
 
   public async create(createDisciplineDto: CreateDisciplineDto) {
