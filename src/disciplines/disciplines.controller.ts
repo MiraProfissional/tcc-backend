@@ -23,8 +23,7 @@ export class DisciplinesController {
     @Param('userId') userId: string,
     @Query() paginationQueryDto: PaginationQueryDto,
   ) {
-    console.log(paginationQueryDto);
-    return this.disciplinesService.findAll(userId);
+    return this.disciplinesService.findAll(userId, paginationQueryDto);
   }
 
   @ApiOperation({

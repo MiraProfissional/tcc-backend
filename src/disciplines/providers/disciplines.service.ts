@@ -9,6 +9,7 @@ import { Teacher } from 'src/users/entities/teacher.entity';
 import { Student } from 'src/users/entities/student.entity';
 import { ConfigType } from '@nestjs/config';
 import cameraApiConfig from '../config/cameraApi.config';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 
 @Injectable()
 export class DisciplinesService {
@@ -22,9 +23,14 @@ export class DisciplinesService {
     private readonly cameraApiConfiguration: ConfigType<typeof cameraApiConfig>,
   ) {}
 
-  public async findAll(userId: string) {
-    console.log(this.cameraApiConfiguration.apiLink);
-    return await this.disciplineRepository.find();
+  public async findAll(userId: string, paginationQueryDto: PaginationQueryDto) {
+    const page = paginationQueryDto.page ?? 1;
+    const limit = paginationQueryDto.limit ?? 10;
+
+    return await this.disciplineRepository.find({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
 
   public async create(createDisciplineDto: CreateDisciplineDto) {
@@ -43,6 +49,12 @@ export class DisciplinesService {
       students = await this.usersService.findMultipleStudents(
         createDisciplineDto.students,
       );
+
+      if (students.length != createDisciplineDto.students.length) {
+        throw new BadRequestException(
+          'Some student does not exist, please check the IDs',
+        );
+      }
     }
 
     const disciplineData = {

@@ -8,6 +8,6 @@ Content-Type: application/json
     "disciplineTime": ["5N34","6N12"],
     "disciplineRoom": "C1113",
     "ipCamera": "1.1.1.100",
-    "teacher": 1,
-    "students": [3,4]
+    "teacher": 4,
+    "students": [7]
 }
