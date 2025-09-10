@@ -11,7 +11,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Teacher } from '../entities/teacher.entity';
 import { Student } from '../entities/student.entity';
 import { CreateTeacherDto } from '../dtos/teachers/create-teacher.dto';
-import { CreateStudentDto } from '../dtos/students/create-student.dto';
 
 /**
  * Class to connect to Users table and perform business operations
@@ -28,85 +27,6 @@ export class UsersService {
     @InjectRepository(Student)
     private readonly studentsRepository: Repository<Student>,
   ) {}
-
-  /**
-   * The method to create a student in the database
-   */
-  public async createStudent(createStudentDto: CreateStudentDto) {
-    let existingStudentEmail: Student | null;
-    let existingStudentRegistrationNumber: Student | null;
-    let existingTeacherRegistrationNumber: Teacher | null;
-
-    try {
-      existingStudentEmail = await this.studentsRepository.findOne({
-        where: { email: createStudentDto.email },
-      });
-    } catch {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment, please try later.',
-        { description: 'Error connecting to the database.' },
-      );
-    }
-
-    if (existingStudentEmail) {
-      throw new BadRequestException(
-        'The user already exists. Please check your email.',
-      );
-    }
-
-    try {
-      existingStudentRegistrationNumber = await this.studentsRepository.findOne(
-        {
-          where: { registrationNumber: createStudentDto.registrationNumber },
-        },
-      );
-    } catch {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment, please try later.',
-        { description: 'Error connecting to the database.' },
-      );
-    }
-
-    if (existingStudentRegistrationNumber) {
-      throw new BadRequestException(
-        'The user already exists. Please check your registrationNumber.',
-      );
-    }
-
-    try {
-      existingTeacherRegistrationNumber = await this.teachersRepository.findOne(
-        {
-          where: { registrationNumber: createStudentDto.registrationNumber },
-        },
-      );
-    } catch {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment, please try later.',
-        { description: 'Error connecting to the database.' },
-      );
-    }
-
-    if (existingTeacherRegistrationNumber) {
-      throw new BadRequestException(
-        'This registration number is already used by a teacher.',
-      );
-    }
-
-    let newStudent: Student;
-
-    newStudent = this.studentsRepository.create(createStudentDto);
-
-    try {
-      await this.studentsRepository.save(newStudent);
-    } catch {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment, please try later.',
-        { description: 'Error connecting to the database.' },
-      );
-    }
-
-    return newStudent;
-  }
 
   /**
    * The method to create a teacher in the database
