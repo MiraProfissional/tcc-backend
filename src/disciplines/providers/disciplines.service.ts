@@ -11,6 +11,7 @@ import { ConfigType } from '@nestjs/config';
 import cameraApiConfig from '../config/cameraApi.config';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { Paginated } from 'src/common/pagination/interfaces/paginated.interface';
 
 @Injectable()
 export class DisciplinesService {
@@ -26,7 +27,10 @@ export class DisciplinesService {
     private readonly cameraApiConfiguration: ConfigType<typeof cameraApiConfig>,
   ) {}
 
-  public async findAll(userId: string, paginationQueryDto: PaginationQueryDto) {
+  public async findAll(
+    userId: string,
+    paginationQueryDto: PaginationQueryDto,
+  ): Promise<Paginated<Discipline>> {
     const disciplines = await this.paginationProvider.paginateQuery(
       {
         limit: paginationQueryDto.limit,
