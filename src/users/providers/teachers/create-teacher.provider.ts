@@ -22,7 +22,9 @@ export class CreateTeacherProvider {
   /**
    * The method to create a teacher in the database
    */
-  public async createTeacher(createTeacherDto: CreateTeacherDto) {
+  public async createTeacher(
+    createTeacherDto: CreateTeacherDto,
+  ): Promise<Teacher> {
     let existingTeacherEmail: Teacher | null;
     let existingTeacherRegistrationNumber: Teacher | null;
 

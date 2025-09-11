@@ -5,26 +5,28 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Student } from 'src/users/entities/student.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
-export class FindOneStudentByRegistrationNumber {
+export class FindMultipleStudentsByIdProvider {
   constructor(
     @InjectRepository(Student)
     private readonly studentsRepository: Repository<Student>,
   ) {}
 
   /**
-   * The method to get one student from the database with your registrationNumber
+   * The method to get multiple students from the database with ID
    */
-  public async findOneStudentByRegistrationNumber(
-    studentRegistrationNumber: number,
-  ): Promise<Student | null> {
-    let student: Student | null;
+  public async findMultipleStudents(
+    studentsIds: number[],
+  ): Promise<Array<Student>> {
+    let students: Array<Student> | null;
 
     try {
-      student = await this.studentsRepository.findOneBy({
-        registrationNumber: studentRegistrationNumber,
+      students = await this.studentsRepository.find({
+        where: {
+          id: In(studentsIds),
+        },
       });
     } catch {
       throw new RequestTimeoutException(
@@ -33,12 +35,12 @@ export class FindOneStudentByRegistrationNumber {
       );
     }
 
-    if (!student) {
+    if (!students) {
       throw new BadRequestException(
-        'Student does not exist, please check the student registrationNumber',
+        "Some student's ID does not exist, please check the students IDs",
       );
     }
 
-    return student;
+    return students;
   }
 }

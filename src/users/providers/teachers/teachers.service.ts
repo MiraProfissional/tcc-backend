@@ -1,21 +1,57 @@
 import { Injectable } from '@nestjs/common';
 import { FindOneTeacherByIdProvider } from './find-one-teacher-by-id.provider';
 import { CreateTeacherProvider } from './create-teacher.provider';
-import { Teacher } from 'src/users/entities/teacher.entity';
+import { CreateTeacherDto } from 'src/users/dtos/teachers/create-teacher.dto';
+import { FindOneTeacherByRegistrationNumberProvider } from './find-one-teacher-by-registration-number.provider';
+import { SoftDeleteTeacherByIdProvider } from './soft-delete-teacher-by-id.provider';
+import { DeleteTeacherByIdProvider } from './delete-teacher-by-id.provider';
+import { FindMultipleTeachersByIdProvider } from './find-multiple-teachers-by-id.provider';
 
 @Injectable()
 export class TeachersService {
   constructor(
+    private readonly createTeacherProvider: CreateTeacherProvider,
+
+    private readonly deleteTeacherByIdProvider: DeleteTeacherByIdProvider,
+
+    private readonly findMultipleTeachersByIdProvider: FindMultipleTeachersByIdProvider,
+
+    private readonly findOneTeacherByRegistrationNumberProvider: FindOneTeacherByRegistrationNumberProvider,
+
     private readonly findOneTeacherByIdProvider: FindOneTeacherByIdProvider,
 
-    private readonly createTeacherProvider: CreateTeacherProvider,
+    private readonly softDeleteTeacherByIdProvider: SoftDeleteTeacherByIdProvider,
   ) {}
 
-  public async createTeacher() {
-    return await this.createTeacherProvider;
+  public async createTeacher(createTeacherDto: CreateTeacherDto) {
+    return await this.createTeacherProvider.createTeacher(createTeacherDto);
   }
 
-  public async findOneTeacherById(teacherId: number): Promise<Teacher | null> {
+  public async findMultipleTeachersById(teachersIds: number[]) {
+    return await this.findMultipleTeachersByIdProvider.findMultipleTeachersById(
+      teachersIds,
+    );
+  }
+
+  public async findOneTeacherById(teacherId: number) {
     return await this.findOneTeacherByIdProvider.findOneTeacherById(teacherId);
+  }
+
+  public async findOneTeacherByRegistrationNumber(
+    teacherRegistrationNumber: number,
+  ) {
+    return await this.findOneTeacherByRegistrationNumberProvider.findOneTeacherByRegistrationNumber(
+      teacherRegistrationNumber,
+    );
+  }
+
+  public async deleteTeacherById(teacherId: number) {
+    return await this.deleteTeacherByIdProvider.deleteTeacher(teacherId);
+  }
+
+  public async softDeleteTeacherById(teacherId: number) {
+    return await this.softDeleteTeacherByIdProvider.softDeleteTeacher(
+      teacherId,
+    );
   }
 }
