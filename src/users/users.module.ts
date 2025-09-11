@@ -9,15 +9,23 @@ import { CreateStudentProvider } from './providers/student/create-student.provid
 import { CreateTeacherProvider } from './providers/teacher/create-teacher.provider';
 import { FindOneTeacherByIdProvider } from './providers/teacher/find-one-teacher-by-id.provider';
 import { FindOneStudentByIdProvider } from './providers/student/find-one-student-by-id.provider';
+import { StudentsService } from './providers/student/students.service';
+import { TeacherService } from './providers/teacher/teacher.service';
+import { TeachersController } from './controllers/teachers.controller';
+import { StudentsController } from './controllers/students.controller';
+import { FindOneStudentByRegistrationNumber } from './providers/students/find-one-student-by-registration-number';
 
 @Module({
-  controllers: [UsersController],
+  controllers: [UsersController, TeachersController, StudentsController],
   providers: [
     UsersService,
     CreateStudentProvider,
     CreateTeacherProvider,
     FindOneTeacherByIdProvider,
     FindOneStudentByIdProvider,
+    StudentsService,
+    TeacherService,
+    FindOneStudentByRegistrationNumber,
   ],
   exports: [UsersService],
   imports: [
