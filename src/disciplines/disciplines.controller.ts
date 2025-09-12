@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -50,5 +52,31 @@ export class DisciplinesController {
   @Patch()
   public patch(@Body() patchDisciplineDto: PatchDisciplineDTO) {
     return this.disciplinesService.updateDiscipline(patchDisciplineDto);
+  }
+
+  @ApiOperation({
+    summary: 'Deletes an existing discipline',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'You get a 200 response if your discipline is deleted successfully',
+  })
+  @Delete()
+  public deleteDiscipline(@Query('id', ParseIntPipe) id: number) {
+    return this.disciplinesService.deleteDisciplineById(id);
+  }
+
+  @ApiOperation({
+    summary: 'Soft deletes an existing discipline',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'You get a 200 response if your discipline is soft deleted successfully',
+  })
+  @Delete('/soft-delete')
+  public softDeleteDiscipline(@Query('id', ParseIntPipe) id: number) {
+    return this.disciplinesService.softDeleteDisciplineById(id);
   }
 }

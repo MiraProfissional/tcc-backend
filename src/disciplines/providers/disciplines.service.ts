@@ -7,6 +7,8 @@ import { CreateDisciplineProvider } from './create-discipline.provider';
 import { FindAllDisciplinesProvider } from './find-all-disciplines.provider';
 import { PatchDisciplineDTO } from '../dtos/patch-discipline.dto';
 import { UpdateDisciplineProvider } from './update-discipline.provider';
+import { DeleteDisciplineByIdProvider } from './delete-discipline-by-id.provider';
+import { SoftDeleteDisciplineByIdProvider } from './soft-delete-discipline-by-id.provider';
 
 @Injectable()
 export class DisciplinesService {
@@ -16,6 +18,10 @@ export class DisciplinesService {
     private readonly findAllDisciplinesProvider: FindAllDisciplinesProvider,
 
     private readonly updateDisciplineProvider: UpdateDisciplineProvider,
+
+    private readonly deleteDisciplineByIdProvider: DeleteDisciplineByIdProvider,
+
+    private readonly softDeleteDisciplineByIdProvider: SoftDeleteDisciplineByIdProvider,
 
     @Inject(cameraApiConfig.KEY)
     private readonly cameraApiConfiguration: ConfigType<typeof cameraApiConfig>,
@@ -36,6 +42,18 @@ export class DisciplinesService {
   public async updateDiscipline(patchDisciplineDto: PatchDisciplineDTO) {
     return await this.updateDisciplineProvider.updateDiscipline(
       patchDisciplineDto,
+    );
+  }
+
+  public async deleteDisciplineById(disciplineId: number) {
+    return await this.deleteDisciplineByIdProvider.deleteDiscipline(
+      disciplineId,
+    );
+  }
+
+  public async softDeleteDisciplineById(disciplineId: number) {
+    return await this.softDeleteDisciplineByIdProvider.softDeleteDiscipline(
+      disciplineId,
     );
   }
 }

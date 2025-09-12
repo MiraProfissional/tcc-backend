@@ -18,7 +18,7 @@ export class SoftDeleteDisciplineByIdProvider {
   /**
    * The method to soft delete a discipline from the database by ID
    */
-  public async softDeleteTeacher(
+  public async softDeleteDiscipline(
     disciplineId: number,
   ): Promise<DisciplineDeleted> {
     let disciplineExist: boolean;
