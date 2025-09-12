@@ -1,5 +1,4 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { UsersService } from 'src/users/providers/users.service';
 import { Repository } from 'typeorm';
 import { Discipline } from '../discipline.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,11 +11,15 @@ import cameraApiConfig from '../config/cameraApi.config';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 import { Paginated } from 'src/common/pagination/interfaces/paginated.interface';
+import { StudentsService } from 'src/users/providers/students/students.service';
+import { TeachersService } from 'src/users/providers/teachers/teachers.service';
 
 @Injectable()
 export class DisciplinesService {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly studentsService: StudentsService,
+
+    private readonly teachersService: TeachersService,
 
     @InjectRepository(Discipline)
     private disciplineRepository: Repository<Discipline>,
@@ -46,7 +49,7 @@ export class DisciplinesService {
     let teacher: Teacher | null;
     let students: Array<Student> = [];
 
-    teacher = await this.usersService.findOneTeacherById(
+    teacher = await this.teachersService.findOneTeacherById(
       createDisciplineDto.teacher,
     );
 
@@ -55,7 +58,7 @@ export class DisciplinesService {
     }
 
     if (createDisciplineDto.students) {
-      students = await this.usersService.findMultipleStudents(
+      students = await this.studentsService.findMultipleStudentsById(
         createDisciplineDto.students,
       );
 

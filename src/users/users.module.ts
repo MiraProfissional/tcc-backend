@@ -1,5 +1,4 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { UsersController } from './users.controller';
 import { AuthModule } from 'src/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Student } from './entities/student.entity';
@@ -22,7 +21,7 @@ import { SoftDeleteStudentByIdProvider } from './providers/students/soft-delete-
 import { DeleteStudentByIdProvider } from './providers/students/delete-student-by-id.provider';
 
 @Module({
-  controllers: [UsersController, TeachersController, StudentsController],
+  controllers: [TeachersController, StudentsController],
   providers: [
     CreateStudentProvider,
     CreateTeacherProvider,

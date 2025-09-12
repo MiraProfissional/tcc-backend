@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { FindOneTeacherByIdProvider } from './find-one-teacher-by-id.provider';
 import { CreateTeacherProvider } from './create-teacher.provider';
 import { CreateTeacherDto } from 'src/users/dtos/teachers/create-teacher.dto';
@@ -6,10 +6,14 @@ import { FindOneTeacherByRegistrationNumberProvider } from './find-one-teacher-b
 import { SoftDeleteTeacherByIdProvider } from './soft-delete-teacher-by-id.provider';
 import { DeleteTeacherByIdProvider } from './delete-teacher-by-id.provider';
 import { FindMultipleTeachersByIdProvider } from './find-multiple-teachers-by-id.provider';
+import { AuthService } from 'src/auth/providers/auth.service';
 
 @Injectable()
 export class TeachersService {
   constructor(
+    @Inject(forwardRef(() => AuthService))
+    private readonly authService: AuthService,
+
     private readonly createTeacherProvider: CreateTeacherProvider,
 
     private readonly deleteTeacherByIdProvider: DeleteTeacherByIdProvider,
@@ -25,6 +29,10 @@ export class TeachersService {
 
   public async createTeacher(createTeacherDto: CreateTeacherDto) {
     return await this.createTeacherProvider.createTeacher(createTeacherDto);
+  }
+
+  public findAll() {
+    return 'Find all method';
   }
 
   public async findMultipleTeachersById(teachersIds: number[]) {
