@@ -36,7 +36,7 @@ export class DisciplinesController {
   })
   @Post()
   public post(@Body() createDisciplineDto: CreateDisciplineDto) {
-    return this.disciplinesService.create(createDisciplineDto);
+    return this.disciplinesService.createDiscipline(createDisciplineDto);
   }
 
   @ApiOperation({

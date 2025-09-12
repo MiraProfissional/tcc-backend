@@ -23,12 +23,12 @@ import { DeleteStudentByIdProvider } from './providers/students/delete-student-b
 @Module({
   controllers: [TeachersController, StudentsController],
   providers: [
+    TeachersService,
+    StudentsService,
     CreateStudentProvider,
     CreateTeacherProvider,
     FindOneTeacherByIdProvider,
     FindOneStudentByIdProvider,
-    StudentsService,
-    TeachersService,
     FindOneTeacherByRegistrationNumberProvider,
     FindOneStudentByRegistrationNumberProvider,
     DeleteTeacherByIdProvider,
@@ -38,7 +38,7 @@ import { DeleteStudentByIdProvider } from './providers/students/delete-student-b
     SoftDeleteStudentByIdProvider,
     DeleteStudentByIdProvider,
   ],
-  exports: [StudentsService, TeachersService],
+  exports: [TeachersService, StudentsService],
   imports: [
     forwardRef(() => AuthModule),
     TypeOrmModule.forFeature([Student, Teacher]),

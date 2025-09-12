@@ -7,10 +7,14 @@ import { DisciplinesService } from './providers/disciplines.service';
 import { ConfigModule } from '@nestjs/config';
 import cameraApiConfig from './config/cameraApi.config';
 import { PaginationModule } from 'src/common/pagination/pagination.module';
+import { CreateDisciplineProvider } from './providers/create-discipline.provider';
+import { FindAllDisciplinesProvider } from './providers/find-all-disciplines.provider';
+import { DeleteDisciplineByIdProvider } from './providers/delete-discipline-by-id.provider';
+import { SoftDeleteDisciplineByIdProvider } from './providers/soft-delete-discipline-by-id.provider';
 
 @Module({
   controllers: [DisciplinesController],
-  providers: [DisciplinesService],
+  providers: [DisciplinesService, CreateDisciplineProvider, FindAllDisciplinesProvider, DeleteDisciplineByIdProvider, SoftDeleteDisciplineByIdProvider],
   imports: [
     UsersModule,
     PaginationModule,
