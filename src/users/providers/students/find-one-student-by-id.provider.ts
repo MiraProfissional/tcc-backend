@@ -17,7 +17,7 @@ export class FindOneStudentByIdProvider {
   /**
    * The method to get one student from the database with your ID
    */
-  public async findOneStudentById(studentId: number): Promise<Student | null> {
+  public async findOneStudentById(studentId: number): Promise<Student> {
     let student: Student | null;
 
     try {

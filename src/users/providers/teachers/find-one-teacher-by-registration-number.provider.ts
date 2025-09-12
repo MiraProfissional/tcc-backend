@@ -33,12 +33,6 @@ export class FindOneTeacherByRegistrationNumberProvider {
       );
     }
 
-    if (!teacher) {
-      throw new BadRequestException(
-        'Teacher does not exist, please check the teacher registrationNumber',
-      );
-    }
-
     return teacher;
   }
 }

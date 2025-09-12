@@ -8,6 +8,7 @@ import { CreateStudentDto } from 'src/users/dtos/students/create-student.dto';
 import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import { Repository } from 'typeorm';
+import { TeachersService } from '../teachers/teachers.service';
 
 @Injectable()
 export class CreateStudentProvider {
@@ -15,8 +16,7 @@ export class CreateStudentProvider {
     @InjectRepository(Student)
     private readonly studentsRepository: Repository<Student>,
 
-    @InjectRepository(Teacher)
-    private readonly teachersRepository: Repository<Teacher>,
+    private readonly teachersService: TeachersService,
   ) {}
 
   /**
@@ -25,7 +25,6 @@ export class CreateStudentProvider {
   public async createStudent(createStudentDto: CreateStudentDto) {
     let existingStudentEmail: Student | null;
     let existingStudentRegistrationNumber: Student | null;
-    let existingTeacherRegistrationNumber: Teacher | null;
 
     try {
       existingStudentEmail = await this.studentsRepository.findOne({
@@ -63,18 +62,10 @@ export class CreateStudentProvider {
       );
     }
 
-    try {
-      existingTeacherRegistrationNumber = await this.teachersRepository.findOne(
-        {
-          where: { registrationNumber: createStudentDto.registrationNumber },
-        },
+    const existingTeacherRegistrationNumber: Teacher | null =
+      await this.teachersService.findOneTeacherByRegistrationNumber(
+        createStudentDto.registrationNumber,
       );
-    } catch {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment, please try later.',
-        { description: 'Error connecting to the database.' },
-      );
-    }
 
     if (existingTeacherRegistrationNumber) {
       throw new BadRequestException(

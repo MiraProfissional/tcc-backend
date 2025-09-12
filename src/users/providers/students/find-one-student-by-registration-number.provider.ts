@@ -33,12 +33,6 @@ export class FindOneStudentByRegistrationNumberProvider {
       );
     }
 
-    if (!student) {
-      throw new BadRequestException(
-        'Student does not exist, please check the student registrationNumber',
-      );
-    }
-
     return student;
   }
 }

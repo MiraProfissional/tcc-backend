@@ -17,7 +17,7 @@ export class FindOneTeacherByIdProvider {
   /**
    * The method to get one teacher from the database
    */
-  public async findOneTeacherById(teacherId: number): Promise<Teacher | null> {
+  public async findOneTeacherById(teacherId: number): Promise<Teacher> {
     let teacher: Teacher | null;
 
     try {
