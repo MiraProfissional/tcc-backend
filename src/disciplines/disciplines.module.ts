@@ -11,10 +11,11 @@ import { CreateDisciplineProvider } from './providers/create-discipline.provider
 import { FindAllDisciplinesProvider } from './providers/find-all-disciplines.provider';
 import { DeleteDisciplineByIdProvider } from './providers/delete-discipline-by-id.provider';
 import { SoftDeleteDisciplineByIdProvider } from './providers/soft-delete-discipline-by-id.provider';
+import { UpdateDisciplineProvider } from './providers/update-discipline.provider';
 
 @Module({
   controllers: [DisciplinesController],
-  providers: [DisciplinesService, CreateDisciplineProvider, FindAllDisciplinesProvider, DeleteDisciplineByIdProvider, SoftDeleteDisciplineByIdProvider],
+  providers: [DisciplinesService, CreateDisciplineProvider, FindAllDisciplinesProvider, DeleteDisciplineByIdProvider, SoftDeleteDisciplineByIdProvider, UpdateDisciplineProvider],
   imports: [
     UsersModule,
     PaginationModule,

@@ -23,7 +23,7 @@ export class DisciplinesController {
     @Param('userId') userId: string,
     @Query() paginationQueryDto: PaginationQueryDto,
   ) {
-    return this.disciplinesService.findAll(userId, paginationQueryDto);
+    return this.disciplinesService.findAllDisciplines(paginationQueryDto);
   }
 
   @ApiOperation({
@@ -49,6 +49,6 @@ export class DisciplinesController {
   })
   @Patch()
   public patch(@Body() patchDisciplineDto: PatchDisciplineDTO) {
-    return 'this.disciplinesService.update(patchDisciplineDto);';
+    return this.disciplinesService.updateDiscipline(patchDisciplineDto);
   }
 }

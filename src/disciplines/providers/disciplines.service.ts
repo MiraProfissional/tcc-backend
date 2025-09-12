@@ -5,6 +5,8 @@ import cameraApiConfig from '../config/cameraApi.config';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { CreateDisciplineProvider } from './create-discipline.provider';
 import { FindAllDisciplinesProvider } from './find-all-disciplines.provider';
+import { PatchDisciplineDTO } from '../dtos/patch-discipline.dto';
+import { UpdateDisciplineProvider } from './update-discipline.provider';
 
 @Injectable()
 export class DisciplinesService {
@@ -12,6 +14,8 @@ export class DisciplinesService {
     private readonly createDisciplineProvider: CreateDisciplineProvider,
 
     private readonly findAllDisciplinesProvider: FindAllDisciplinesProvider,
+
+    private readonly updateDisciplineProvider: UpdateDisciplineProvider,
 
     @Inject(cameraApiConfig.KEY)
     private readonly cameraApiConfiguration: ConfigType<typeof cameraApiConfig>,
@@ -29,34 +33,9 @@ export class DisciplinesService {
     );
   }
 
-  /* public async update(patchDisciplineDto: PatchDisciplineDTO) {
-    if (patchDisciplineDto.students) {
-      const users = await this.usersService.findMutipleUsers(
-        patchDisciplineDto.students,
-      );
-    }
-
-    const discipline = await this.disciplineRepository.findOneBy({
-      id: patchDisciplineDto.id,
-    });
-
-    if (discipline) {
-      discipline.name = patchDisciplineDto.name ?? discipline.name;
-      discipline.code = patchDisciplineDto.code ?? discipline.code;
-      discipline.semester = patchDisciplineDto.semester ?? discipline.semester;
-      discipline.disciplineTime =
-        patchDisciplineDto.disciplineTime ?? discipline.disciplineTime;
-      discipline.disciplineRoom =
-        patchDisciplineDto?.disciplineRoom ?? discipline?.disciplineRoom;
-      discipline.ipCamera =
-        patchDisciplineDto?.ipCamera ?? discipline?.ipCamera;
-      if (patchDisciplineDto.students) {
-        discipline.students = discipline.students.append(
-          patchDisciplineDto.students,
-        );
-      }
-    }
-
-    return await this.disciplineRepository.save(discipline);
-  } */
+  public async updateDiscipline(patchDisciplineDto: PatchDisciplineDTO) {
+    return await this.updateDisciplineProvider.updateDiscipline(
+      patchDisciplineDto,
+    );
+  }
 }

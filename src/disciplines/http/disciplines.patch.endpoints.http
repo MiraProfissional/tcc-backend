@@ -2,12 +2,6 @@ PATCH http://localhost:3000/disciplines/
 Content-Type: application/json
 
 {
-    "name" :"Algoritmos e Estruturas de Dados II",
-    "code": "ALG02",
-    "semester": 1,
-    "day": ["Terca","Quinta"],
-    "startTime": "13h30",
-    "endTime": "15h45",
-    "classRoom": "C1105",
-    "ipCamera": "1.1.1.100"
+    "id": 6,
+    "students": [4,11]
 }
