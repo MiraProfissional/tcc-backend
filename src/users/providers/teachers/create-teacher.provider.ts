@@ -11,10 +11,14 @@ import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import { Repository } from 'typeorm';
 import { StudentsService } from '../students/students.service';
+import { HashingProvider } from 'src/auth/providers/hashing.provider';
 
 @Injectable()
 export class CreateTeacherProvider {
   constructor(
+    @Inject(forwardRef(() => HashingProvider))
+    private readonly hashingProvider: HashingProvider,
+
     @InjectRepository(Teacher)
     private readonly teachersRepository: Repository<Teacher>,
 
@@ -80,7 +84,12 @@ export class CreateTeacherProvider {
 
     let newTeacher: Teacher;
 
-    newTeacher = this.teachersRepository.create(createTeacherDto);
+    newTeacher = this.teachersRepository.create({
+      ...createTeacherDto,
+      password: await this.hashingProvider.hashPassword(
+        createTeacherDto.password,
+      ),
+    });
 
     try {
       await this.teachersRepository.save(newTeacher);

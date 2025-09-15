@@ -2,14 +2,14 @@ POST http://localhost:3000/students/
 Content-Type: application/json
 
 {
-    "firstName" :"Luana",
+    "firstName" :"Tuani",
     "lastName":"Jesus",
-    "email":"Luana@email.com",
+    "email":"Tuani@email.com",
     "password":"AlunoSenha@1",
     "dateBirth":"2001-03-16T07:46:32+00:00",
     "cpf":"44455566678",
     "cellphone":"12987654321",
-    "registrationNumber": 987654322,
+    "registrationNumber": 987654324,
     "course": "Ciencia da Computacao",
     "userRole": "STUDENT"
 }

@@ -1,5 +1,7 @@
 import {
   BadRequestException,
+  forwardRef,
+  Inject,
   Injectable,
   RequestTimeoutException,
 } from '@nestjs/common';
@@ -9,10 +11,14 @@ import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import { Repository } from 'typeorm';
 import { TeachersService } from '../teachers/teachers.service';
+import { HashingProvider } from 'src/auth/providers/hashing.provider';
 
 @Injectable()
 export class CreateStudentProvider {
   constructor(
+    @Inject(forwardRef(() => HashingProvider))
+    private readonly hashingProvider: HashingProvider,
+
     @InjectRepository(Student)
     private readonly studentsRepository: Repository<Student>,
 
@@ -75,7 +81,12 @@ export class CreateStudentProvider {
 
     let newStudent: Student;
 
-    newStudent = this.studentsRepository.create(createStudentDto);
+    newStudent = this.studentsRepository.create({
+      ...createStudentDto,
+      password: await this.hashingProvider.hashPassword(
+        createStudentDto.password,
+      ),
+    });
 
     try {
       await this.studentsRepository.save(newStudent);
