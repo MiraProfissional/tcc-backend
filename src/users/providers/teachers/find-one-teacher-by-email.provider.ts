@@ -8,20 +8,22 @@ import { Teacher } from 'src/users/entities/teacher.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class FindOneTeacherByIdProvider {
+export class FindOneTeacherByEmailProvider {
   constructor(
     @InjectRepository(Teacher)
     private readonly teachersRepository: Repository<Teacher>,
   ) {}
 
   /**
-   * The method to get one teacher from the database by Id
+   * The method to get one teacher from the database by Email
    */
-  public async findOneTeacherById(teacherId: number): Promise<Teacher> {
+  public async findOneTeacherByEmail(teacherEmail: string): Promise<Teacher> {
     let teacher: Teacher | null;
 
     try {
-      teacher = await this.teachersRepository.findOneBy({ id: teacherId });
+      teacher = await this.teachersRepository.findOneBy({
+        email: teacherEmail,
+      });
     } catch {
       throw new RequestTimeoutException(
         'Unable to process your request at the moment, please try later.',
@@ -31,7 +33,7 @@ export class FindOneTeacherByIdProvider {
 
     if (!teacher) {
       throw new BadRequestException(
-        'Teacher does not exist, please check the teacher ID',
+        'Teacher does not exist, please check the teacher Email',
       );
     }
 

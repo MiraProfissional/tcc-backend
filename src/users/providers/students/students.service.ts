@@ -7,6 +7,7 @@ import { FindMultipleStudentsByIdProvider } from './find-multiple-students-by-id
 import { FindOneStudentByRegistrationNumberProvider } from './find-one-student-by-registration-number.provider';
 import { SoftDeleteStudentByIdProvider } from './soft-delete-student-by-id.provider';
 import { AuthService } from 'src/auth/providers/auth.service';
+import { FindOneStudentByEmailProvider } from './find-one-student-by-email.provider';
 
 @Injectable()
 export class StudentsService {
@@ -19,6 +20,8 @@ export class StudentsService {
     private readonly deleteStudentByIdProvider: DeleteStudentByIdProvider,
 
     private readonly findMultipleStudentsByIdProvider: FindMultipleStudentsByIdProvider,
+
+    private readonly findOneStudentByEmailProvider: FindOneStudentByEmailProvider,
 
     private readonly findOneStudentByRegistrationNumberProvider: FindOneStudentByRegistrationNumberProvider,
 
@@ -38,6 +41,12 @@ export class StudentsService {
   public async findMultipleStudentsById(studentsIds: number[]) {
     return this.findMultipleStudentsByIdProvider.findMultipleStudents(
       studentsIds,
+    );
+  }
+
+  public async findOneStudentByEmail(studentEmail: string) {
+    return await this.findOneStudentByEmailProvider.findOneStudentByEmail(
+      studentEmail,
     );
   }
 

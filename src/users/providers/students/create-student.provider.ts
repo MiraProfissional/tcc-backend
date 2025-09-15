@@ -22,6 +22,7 @@ export class CreateStudentProvider {
     @InjectRepository(Student)
     private readonly studentsRepository: Repository<Student>,
 
+    @Inject(forwardRef(() => TeachersService))
     private readonly teachersService: TeachersService,
   ) {}
 

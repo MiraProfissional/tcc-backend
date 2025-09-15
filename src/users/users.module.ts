@@ -19,6 +19,8 @@ import { FindMultipleTeachersByIdProvider } from './providers/teachers/find-mult
 import { FindMultipleStudentsByIdProvider } from './providers/students/find-multiple-students-by-id.provider';
 import { SoftDeleteStudentByIdProvider } from './providers/students/soft-delete-student-by-id.provider';
 import { DeleteStudentByIdProvider } from './providers/students/delete-student-by-id.provider';
+import { FindOneTeacherByEmailProvider } from './providers/teachers/find-one-teacher-by-email.provider';
+import { FindOneStudentByEmailProvider } from './providers/students/find-one-student-by-email.provider';
 
 @Module({
   controllers: [TeachersController, StudentsController],
@@ -37,6 +39,8 @@ import { DeleteStudentByIdProvider } from './providers/students/delete-student-b
     FindMultipleStudentsByIdProvider,
     SoftDeleteStudentByIdProvider,
     DeleteStudentByIdProvider,
+    FindOneTeacherByEmailProvider,
+    FindOneStudentByEmailProvider,
   ],
   exports: [TeachersService, StudentsService],
   imports: [

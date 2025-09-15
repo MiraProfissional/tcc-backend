@@ -7,6 +7,7 @@ import { SoftDeleteTeacherByIdProvider } from './soft-delete-teacher-by-id.provi
 import { DeleteTeacherByIdProvider } from './delete-teacher-by-id.provider';
 import { FindMultipleTeachersByIdProvider } from './find-multiple-teachers-by-id.provider';
 import { AuthService } from 'src/auth/providers/auth.service';
+import { FindOneTeacherByEmailProvider } from './find-one-teacher-by-email.provider';
 
 @Injectable()
 export class TeachersService {
@@ -17,6 +18,8 @@ export class TeachersService {
     private readonly createTeacherProvider: CreateTeacherProvider,
 
     private readonly deleteTeacherByIdProvider: DeleteTeacherByIdProvider,
+
+    private readonly findOneTeacherByEmailProvider: FindOneTeacherByEmailProvider,
 
     private readonly findMultipleTeachersByIdProvider: FindMultipleTeachersByIdProvider,
 
@@ -38,6 +41,12 @@ export class TeachersService {
   public async findMultipleTeachersById(teachersIds: number[]) {
     return await this.findMultipleTeachersByIdProvider.findMultipleTeachersById(
       teachersIds,
+    );
+  }
+
+  public async findOneTeacherByEmail(teacherEmail: string) {
+    return await this.findOneTeacherByEmailProvider.findOneTeacherByEmail(
+      teacherEmail,
     );
   }
 
