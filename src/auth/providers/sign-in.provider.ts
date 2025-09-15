@@ -9,6 +9,8 @@ import { SignInDto } from '../dtos/signin.dto';
 import { TeachersService } from 'src/users/providers/teachers/teachers.service';
 import { StudentsService } from 'src/users/providers/students/students.service';
 import { HashingProvider } from './hashing.provider';
+import { Student } from 'src/users/entities/student.entity';
+import { Teacher } from 'src/users/entities/teacher.entity';
 
 @Injectable()
 export class SignInProvider {
@@ -23,9 +25,9 @@ export class SignInProvider {
   ) {}
 
   public async signIn(signInDto: SignInDto) {
-    const user =
-      (await this.studentsService.findOneStudentByEmail(signInDto.email)) ??
-      (await this.teachersService.findOneTeacherByEmail(signInDto.email));
+    let user: Student | Teacher | null;
+
+    user = await this.studentsService.findOneStudentByEmail(signInDto.email);
 
     let isEqual: boolean = false;
 
