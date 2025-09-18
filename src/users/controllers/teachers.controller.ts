@@ -14,6 +14,8 @@ import { GetUsersParamDto } from '../dtos/users/get-users-param.dto';
 import { CreateTeacherDto } from '../dtos/teachers/create-teacher.dto';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { PatchUserDto } from '../dtos/users/patch-user.dto';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { AuthType } from 'src/auth/enums/auth-type.enum';
 
 @Controller('teachers')
 export class TeachersController {
@@ -55,6 +57,7 @@ export class TeachersController {
     description: 'Teacher created succesfully',
   })
   @Post()
+  @Auth(AuthType.None)
   public postTeacher(@Body() createTeacherDto: CreateTeacherDto) {
     return this.teachersService.createTeacher(createTeacherDto);
   }
