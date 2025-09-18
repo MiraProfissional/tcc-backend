@@ -15,7 +15,14 @@ import { UpdateDisciplineProvider } from './providers/update-discipline.provider
 
 @Module({
   controllers: [DisciplinesController],
-  providers: [DisciplinesService, CreateDisciplineProvider, FindAllDisciplinesProvider, DeleteDisciplineByIdProvider, SoftDeleteDisciplineByIdProvider, UpdateDisciplineProvider],
+  providers: [
+    DisciplinesService,
+    CreateDisciplineProvider,
+    FindAllDisciplinesProvider,
+    DeleteDisciplineByIdProvider,
+    SoftDeleteDisciplineByIdProvider,
+    UpdateDisciplineProvider,
+  ],
   imports: [
     UsersModule,
     PaginationModule,
