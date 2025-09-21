@@ -14,6 +14,8 @@ import { CreateDisciplineDto } from './dtos/create-discipline.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PatchDisciplineDTO } from './dtos/patch-discipline.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
+import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
 
 @Controller('disciplines')
 @ApiTags('Disciplines')
@@ -37,8 +39,11 @@ export class DisciplinesController {
       'You get a 201 response if your discipline is created successfully',
   })
   @Post()
-  public post(@Body() createDisciplineDto: CreateDisciplineDto) {
-    return this.disciplinesService.createDiscipline(createDisciplineDto);
+  public post(
+    @Body() createDisciplineDto: CreateDisciplineDto,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.disciplinesService.createDiscipline(createDisciplineDto, user);
   }
 
   @ApiOperation({

@@ -71,14 +71,6 @@ export class CreateDisciplineDto {
   ipCamera: string;
 
   @ApiProperty({
-    description: "This is the teacher's ID of the discipline",
-    example: 1,
-  })
-  @IsInt()
-  @IsNotEmpty()
-  teacher: number;
-
-  @ApiProperty({
     description: 'These are the students IDs of the discipline',
     example: [1, 2],
   })

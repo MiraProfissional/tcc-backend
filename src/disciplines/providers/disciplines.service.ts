@@ -9,6 +9,7 @@ import { PatchDisciplineDTO } from '../dtos/patch-discipline.dto';
 import { UpdateDisciplineProvider } from './update-discipline.provider';
 import { DeleteDisciplineByIdProvider } from './delete-discipline-by-id.provider';
 import { SoftDeleteDisciplineByIdProvider } from './soft-delete-discipline-by-id.provider';
+import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 
 @Injectable()
 export class DisciplinesService {
@@ -33,9 +34,13 @@ export class DisciplinesService {
     );
   }
 
-  public async createDiscipline(createDisciplineDto: CreateDisciplineDto) {
+  public async createDiscipline(
+    createDisciplineDto: CreateDisciplineDto,
+    user: ActiveUserData,
+  ) {
     return await this.createDisciplineProvider.createDiscipline(
       createDisciplineDto,
+      user,
     );
   }
 

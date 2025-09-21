@@ -11,6 +11,7 @@ import { StudentsService } from 'src/users/providers/students/students.service';
 import { TeachersService } from 'src/users/providers/teachers/teachers.service';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import { Student } from 'src/users/entities/student.entity';
+import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 
 @Injectable()
 export class CreateDisciplineProvider {
@@ -23,11 +24,14 @@ export class CreateDisciplineProvider {
     private readonly teachersService: TeachersService,
   ) {}
 
-  public async createDiscipline(createDisciplineDto: CreateDisciplineDto) {
+  public async createDiscipline(
+    createDisciplineDto: CreateDisciplineDto,
+    user: ActiveUserData,
+  ) {
     let students: Array<Student> = [];
 
     const teacher: Teacher = await this.teachersService.findOneTeacherById(
-      createDisciplineDto.teacher,
+      user.sub,
     );
 
     if (createDisciplineDto.students) {
@@ -36,9 +40,7 @@ export class CreateDisciplineProvider {
       );
 
       if (students.length != createDisciplineDto.students.length) {
-        throw new BadRequestException(
-          'Some student does not exist, please check the IDs',
-        );
+        throw new BadRequestException('Please check de students IDs');
       }
     }
 

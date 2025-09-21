@@ -51,9 +51,9 @@ export class UpdateDisciplineProvider {
       discipline.students = [...(discipline.students ?? []), ...newUsers];
     }
 
-    if (patchDisciplineDto.teacher) {
-      const newTeacher = await this.teachersService.findOneTeacherById(
-        patchDisciplineDto.teacher,
+    if (patchDisciplineDto.teacherEmail) {
+      const newTeacher = await this.teachersService.findOneTeacherByEmail(
+        patchDisciplineDto.teacherEmail,
       );
 
       discipline.teacher = newTeacher;
