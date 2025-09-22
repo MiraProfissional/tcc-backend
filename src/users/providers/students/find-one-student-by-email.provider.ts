@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  RequestTimeoutException,
-} from '@nestjs/common';
+import { Injectable, RequestTimeoutException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Student } from 'src/users/entities/student.entity';
 import { Repository } from 'typeorm';
@@ -17,7 +13,9 @@ export class FindOneStudentByEmailProvider {
   /**
    * The method to get one student from the database with your Email
    */
-  public async findOneStudentByEmail(studentEmail: string): Promise<Student> {
+  public async findOneStudentByEmail(
+    studentEmail: string,
+  ): Promise<Student | null> {
     let student: Student | null;
 
     try {
@@ -28,12 +26,6 @@ export class FindOneStudentByEmailProvider {
       throw new RequestTimeoutException(
         'Unable to process your request at the moment, please try later.',
         { description: 'Error connecting to the database.' },
-      );
-    }
-
-    if (!student) {
-      throw new BadRequestException(
-        'Student does not exist, please check the student Email',
       );
     }
 

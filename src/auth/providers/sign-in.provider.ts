@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
@@ -37,6 +38,14 @@ export class SignInProvider {
     let user: Student | Teacher | null;
 
     user = await this.studentsService.findOneStudentByEmail(signInDto.email);
+
+    if (!user) {
+      user = await this.teachersService.findOneTeacherByEmail(signInDto.email);
+    }
+
+    if (!user) {
+      throw new BadRequestException('User not found, please check your email');
+    }
 
     let isEqual: boolean = false;
 

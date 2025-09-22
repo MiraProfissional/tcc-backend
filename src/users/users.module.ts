@@ -21,11 +21,6 @@ import { SoftDeleteStudentByIdProvider } from './providers/students/soft-delete-
 import { DeleteStudentByIdProvider } from './providers/students/delete-student-by-id.provider';
 import { FindOneTeacherByEmailProvider } from './providers/teachers/find-one-teacher-by-email.provider';
 import { FindOneStudentByEmailProvider } from './providers/students/find-one-student-by-email.provider';
-import jwtConfig from 'src/auth/config/jwt.config';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
-import { AccessTokenGuard } from 'src/auth/guards/access-token/access-token.guard';
 
 @Module({
   controllers: [TeachersController, StudentsController],

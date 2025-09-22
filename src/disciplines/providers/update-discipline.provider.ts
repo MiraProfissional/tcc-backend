@@ -56,6 +56,12 @@ export class UpdateDisciplineProvider {
         patchDisciplineDto.teacherEmail,
       );
 
+      if (!newTeacher) {
+        throw new BadRequestException(
+          'Teacher does not exist, please check the teacher Email',
+        );
+      }
+
       discipline.teacher = newTeacher;
     }
 
