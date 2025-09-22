@@ -12,26 +12,20 @@ import { StudentsService } from 'src/users/providers/students/students.service';
 import { HashingProvider } from './hashing.provider';
 import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigType } from '@nestjs/config';
-import jwtConfig from '../config/jwt.config';
-import { ActiveUserData } from '../interfaces/active-user.interface';
+import { GenerateTokensProvider } from './generate-tokens.provider';
 
 @Injectable()
 export class SignInProvider {
   constructor(
-    @Inject(forwardRef(() => TeachersService))
-    private readonly teachersService: TeachersService,
+    private readonly generateTokensProvider: GenerateTokensProvider,
+
+    private readonly hashingProvider: HashingProvider,
 
     @Inject(forwardRef(() => StudentsService))
     private readonly studentsService: StudentsService,
 
-    private readonly hashingProvider: HashingProvider,
-
-    private readonly jwtService: JwtService,
-
-    @Inject(jwtConfig.KEY)
-    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
+    @Inject(forwardRef(() => TeachersService))
+    private readonly teachersService: TeachersService,
   ) {}
 
   public async signIn(signInDto: SignInDto) {
@@ -64,22 +58,6 @@ export class SignInProvider {
       throw new UnauthorizedException('Incorrect password');
     }
 
-    const accessToken = await this.jwtService.signAsync(
-      {
-        sub: user.id,
-        email: user.email,
-        role: user.userRole,
-      } as ActiveUserData,
-      {
-        audience: this.jwtConfiguration.audience,
-        issuer: this.jwtConfiguration.issuer,
-        secret: this.jwtConfiguration.secret,
-        expiresIn: this.jwtConfiguration.accessTokenTtl,
-      },
-    );
-
-    return {
-      accessToken,
-    };
+    return await this.generateTokensProvider.generateTokens(user);
   }
 }
