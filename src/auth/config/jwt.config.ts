@@ -11,5 +11,7 @@ export default registerAs('jwt', () => {
     refreshTokenTtl: process.env.JWT_REFRESH_TOKEN_TTL
       ? parseInt(process.env.JWT_REFRESH_TOKEN_TTL)
       : 86400,
+    googleClientId: process.env.GOOGLE_CLIENT_ID,
+    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   };
 });
