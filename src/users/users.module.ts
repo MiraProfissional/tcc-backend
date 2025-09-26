@@ -21,6 +21,10 @@ import { SoftDeleteStudentByIdProvider } from './providers/students/soft-delete-
 import { DeleteStudentByIdProvider } from './providers/students/delete-student-by-id.provider';
 import { FindOneTeacherByEmailProvider } from './providers/teachers/find-one-teacher-by-email.provider';
 import { FindOneStudentByEmailProvider } from './providers/students/find-one-student-by-email.provider';
+import { FindOneStudentByGoogleIdProvider } from './providers/students/find-one-student-by-google-id.provider';
+import { FindOneTeacherByGoogleIdProvider } from './providers/teachers/find-one-teacher-by-google-id.provider';
+import { CreateGoogleStudentProvider } from './providers/students/create-google-student.provider';
+import { CreateGoogleTeacherProvider } from './providers/teachers/create-google-teacher.provider';
 
 @Module({
   controllers: [TeachersController, StudentsController],
@@ -41,6 +45,10 @@ import { FindOneStudentByEmailProvider } from './providers/students/find-one-stu
     DeleteStudentByIdProvider,
     FindOneTeacherByEmailProvider,
     FindOneStudentByEmailProvider,
+    FindOneStudentByGoogleIdProvider,
+    FindOneTeacherByGoogleIdProvider,
+    CreateGoogleStudentProvider,
+    CreateGoogleTeacherProvider,
   ],
   exports: [TeachersService, StudentsService],
   imports: [

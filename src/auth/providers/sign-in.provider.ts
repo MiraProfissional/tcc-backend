@@ -43,6 +43,10 @@ export class SignInProvider {
 
     let isEqual: boolean = false;
 
+    if (!user.password) {
+      throw new Error('Password not set for this user');
+    }
+
     try {
       isEqual = await this.hashingProvider.comparePassword(
         signInDto.password,

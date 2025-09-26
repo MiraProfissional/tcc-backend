@@ -8,6 +8,9 @@ import { DeleteTeacherByIdProvider } from './delete-teacher-by-id.provider';
 import { FindMultipleTeachersByIdProvider } from './find-multiple-teachers-by-id.provider';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { FindOneTeacherByEmailProvider } from './find-one-teacher-by-email.provider';
+import { FindOneTeacherByGoogleIdProvider } from './find-one-teacher-by-google-id.provider';
+import { CreateGoogleTeacherProvider } from './create-google-teacher.provider';
+import { GoogleTeacher } from 'src/users/interfaces/google-teacher.interface';
 
 @Injectable()
 export class TeachersService {
@@ -15,13 +18,17 @@ export class TeachersService {
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
 
+    private readonly createGoogleTeacherProvider: CreateGoogleTeacherProvider,
+
     private readonly createTeacherProvider: CreateTeacherProvider,
 
     private readonly deleteTeacherByIdProvider: DeleteTeacherByIdProvider,
 
+    private readonly findMultipleTeachersByIdProvider: FindMultipleTeachersByIdProvider,
+
     private readonly findOneTeacherByEmailProvider: FindOneTeacherByEmailProvider,
 
-    private readonly findMultipleTeachersByIdProvider: FindMultipleTeachersByIdProvider,
+    private readonly findOneTeacherByGoogleIdProvider: FindOneTeacherByGoogleIdProvider,
 
     private readonly findOneTeacherByRegistrationNumberProvider: FindOneTeacherByRegistrationNumberProvider,
 
@@ -29,6 +36,12 @@ export class TeachersService {
 
     private readonly softDeleteTeacherByIdProvider: SoftDeleteTeacherByIdProvider,
   ) {}
+
+  public async createGoogleTeacher(googleTeacher: GoogleTeacher) {
+    return await this.createGoogleTeacherProvider.createGoogleTeacher(
+      googleTeacher,
+    );
+  }
 
   public async createTeacher(createTeacherDto: CreateTeacherDto) {
     return await this.createTeacherProvider.createTeacher(createTeacherDto);
@@ -47,6 +60,12 @@ export class TeachersService {
   public async findOneTeacherByEmail(teacherEmail: string) {
     return await this.findOneTeacherByEmailProvider.findOneTeacherByEmail(
       teacherEmail,
+    );
+  }
+
+  public async findOneTeacherByGoogleId(googleId: string) {
+    return await this.findOneTeacherByGoogleIdProvider.findOneTeacherByGoogleId(
+      googleId,
     );
   }
 

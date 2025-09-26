@@ -8,12 +8,17 @@ import { FindOneStudentByRegistrationNumberProvider } from './find-one-student-b
 import { SoftDeleteStudentByIdProvider } from './soft-delete-student-by-id.provider';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { FindOneStudentByEmailProvider } from './find-one-student-by-email.provider';
+import { FindOneStudentByGoogleIdProvider } from './find-one-student-by-google-id.provider';
+import { CreateGoogleStudentProvider } from './create-google-student.provider';
+import { GoogleStudent } from 'src/users/interfaces/google-student.interface';
 
 @Injectable()
 export class StudentsService {
   constructor(
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
+
+    private readonly createGoogleStudentProvider: CreateGoogleStudentProvider,
 
     private readonly createStudentProvider: CreateStudentProvider,
 
@@ -23,12 +28,20 @@ export class StudentsService {
 
     private readonly findOneStudentByEmailProvider: FindOneStudentByEmailProvider,
 
+    private readonly findOneStudentByGoogleIdProvider: FindOneStudentByGoogleIdProvider,
+
     private readonly findOneStudentByRegistrationNumberProvider: FindOneStudentByRegistrationNumberProvider,
 
     private readonly findOneStudentByIdProvider: FindOneStudentByIdProvider,
 
     private readonly softDeleteStudentByIdProvider: SoftDeleteStudentByIdProvider,
   ) {}
+
+  public async createGoogleStudent(googleStudent: GoogleStudent) {
+    return await this.createGoogleStudentProvider.createGoogleStudent(
+      googleStudent,
+    );
+  }
 
   public async createStudent(createStudentDto: CreateStudentDto) {
     return this.createStudentProvider.createStudent(createStudentDto);
@@ -47,6 +60,12 @@ export class StudentsService {
   public async findOneStudentByEmail(studentEmail: string) {
     return await this.findOneStudentByEmailProvider.findOneStudentByEmail(
       studentEmail,
+    );
+  }
+
+  public async findOneStudentByGoogleId(googleId: string) {
+    return await this.findOneStudentByGoogleIdProvider.findOneStudentByGoogleId(
+      googleId,
     );
   }
 

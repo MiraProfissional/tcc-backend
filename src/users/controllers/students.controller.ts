@@ -13,9 +13,9 @@ import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StudentsService } from '../providers/students/students.service';
 import { GetUsersParamDto } from '../dtos/users/get-users-param.dto';
 import { CreateStudentDto } from '../dtos/students/create-student.dto';
-import { PatchUserDto } from '../dtos/users/patch-user.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { AuthType } from 'src/auth/enums/auth-type.enum';
+import { PatchStudentDto } from '../dtos/students/patch-student.dto';
 
 @Controller('students')
 @ApiTags('Students')
@@ -63,8 +63,8 @@ export class StudentsController {
   }
 
   @Patch()
-  public patchStudent(@Body() patchUserDto: PatchUserDto) {
-    console.log(patchUserDto);
+  public patchStudent(@Body() patchStudentDto: PatchStudentDto) {
+    console.log(patchStudentDto);
     return 'You sent a PATCH request';
   }
 

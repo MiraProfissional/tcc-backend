@@ -13,9 +13,9 @@ import { TeachersService } from '../providers/teachers/teachers.service';
 import { GetUsersParamDto } from '../dtos/users/get-users-param.dto';
 import { CreateTeacherDto } from '../dtos/teachers/create-teacher.dto';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import { PatchUserDto } from '../dtos/users/patch-user.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { AuthType } from 'src/auth/enums/auth-type.enum';
+import { PatchTeacherDto } from '../dtos/teachers/patch-teacher.dto';
 
 @Controller('teachers')
 export class TeachersController {
@@ -63,8 +63,8 @@ export class TeachersController {
   }
 
   @Patch()
-  public patch(@Body() patchUserDto: PatchUserDto) {
-    console.log(patchUserDto);
+  public patch(@Body() patchTeacherDto: PatchTeacherDto) {
+    console.log(patchTeacherDto);
     return 'You sent a PATCH request';
   }
 
