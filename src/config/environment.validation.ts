@@ -12,6 +12,7 @@ export default Joi.object({
   DATABASE_SYNC: Joi.string(),
   DATABASE_AUTOLOAD: Joi.string(),
   CAMERA_API_LINK: Joi.string().required(),
+  UPLOAD_FACE_API_LINK: Joi.string().required(),
   JWT_SECRET: Joi.string().required(),
   JWT_TOKEN_AUDIENCE: Joi.string().required(),
   JWT_TOKEN_ISSUER: Joi.string().required(),
