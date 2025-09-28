@@ -11,7 +11,6 @@ export class FindOneTeacherByGoogleIdProvider {
   ) {}
 
   public async findOneTeacherByGoogleId(googleId: string) {
-    console.log('funcao de merda');
     return await this.teachersRepository.findOneBy({ googleId: googleId });
   }
 }

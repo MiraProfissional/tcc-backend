@@ -45,7 +45,6 @@ export class StudentsController {
     example: 1,
   })
   public getStudents(@Param() getUsersParamDto?: GetUsersParamDto) {
-    console.log(getUsersParamDto);
     return this.studentsService.findAll();
   }
 

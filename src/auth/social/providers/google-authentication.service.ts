@@ -60,24 +60,15 @@ export class GoogleAuthenticationService implements OnModuleInit {
         family_name: lastName,
       } = payload;
 
-      console.log(googleId);
-
-      // Criar metodo pra achar o usuario com o google Id, independente da .service
-
       let user: Student | Teacher | null;
 
-      if (googleTokenDto.userRole == UserRole.STUDENT) {
-        console.log('DO naga');
-        user = await this.studentsService.findOneStudentByGoogleId(googleId);
-      } else {
-        console.log('Da Mel');
+      user = await this.studentsService.findOneStudentByGoogleId(googleId);
+
+      if (!user) {
         user = await this.teachersService.findOneTeacherByGoogleId(googleId);
       }
 
-      console.log(user);
-
       if (user) {
-        console.log('usuario achado!');
         return this.generateTokensProvider.generateTokens(user);
       }
 

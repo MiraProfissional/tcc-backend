@@ -13,7 +13,6 @@ export class GoogleAuthenticationController {
 
   @Post()
   public authenticate(@Body() googleTokeDto: GoogleTokenDto) {
-    console.log(googleTokeDto);
     return this.googleAuthenticationService.authenticate(googleTokeDto);
   }
 }
