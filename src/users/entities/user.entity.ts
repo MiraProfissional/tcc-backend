@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRole } from '../enums/user-role.enum';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export abstract class User {
@@ -40,12 +41,14 @@ export abstract class User {
     length: 96,
     nullable: true,
   })
+  @Exclude()
   password?: string;
 
   @Column({
     type: 'varchar',
     nullable: true,
   })
+  @Exclude()
   googleId?: string;
 
   @Column({

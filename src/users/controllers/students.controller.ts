@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -8,6 +9,7 @@ import {
   Patch,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StudentsService } from '../providers/students/students.service';
@@ -22,7 +24,6 @@ import { PatchStudentDto } from '../dtos/students/patch-student.dto';
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
-  @Get('/{:id}')
   @ApiOperation({
     summary: 'Fetches a list of registered students on the application',
   })
@@ -44,12 +45,12 @@ export class StudentsController {
     description: 'The position of the page that you want the API to return',
     example: 1,
   })
+  @Get('/{:id}')
   public getStudents(@Param() getUsersParamDto?: GetUsersParamDto) {
+    console.log(getUsersParamDto);
     return this.studentsService.findAll();
   }
 
-  @Post()
-  @Auth(AuthType.None)
   @ApiOperation({
     summary: 'Creates a student on the application',
   })
@@ -57,6 +58,9 @@ export class StudentsController {
     status: 200,
     description: 'Student created succesfully',
   })
+  @Post()
+  @Auth(AuthType.None)
+  @UseInterceptors(ClassSerializerInterceptor)
   public postStudent(@Body() createStudentDto: CreateStudentDto) {
     return this.studentsService.createStudent(createStudentDto);
   }
