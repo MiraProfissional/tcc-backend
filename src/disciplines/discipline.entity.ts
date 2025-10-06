@@ -52,11 +52,10 @@ export class Discipline {
   disciplineRoom: string;
 
   @Column({
-    type: 'varchar',
-    length: 24,
+    type: 'int',
     nullable: false,
   })
-  ipCamera: string;
+  ipCamera: number;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.disciplines, {
     eager: true,

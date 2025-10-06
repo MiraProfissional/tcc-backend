@@ -61,14 +61,12 @@ export class CreateDisciplineDto {
   disciplineRoom: string;
 
   @ApiProperty({
-    description: "This is the camera's ip responsible to capture the students",
-    example: '192.168.1.101',
+    description: 'This is the camera index responsible to capture the students',
+    example: '0',
   })
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  @MinLength(3)
-  @MaxLength(24)
-  ipCamera: string;
+  ipCamera: number;
 
   @ApiProperty({
     description: 'These are the students IDs of the discipline',

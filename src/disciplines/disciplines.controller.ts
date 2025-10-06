@@ -16,6 +16,7 @@ import { PatchDisciplineDTO } from './dtos/patch-discipline.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
+import { RequestFaceRecognitionDto } from './dtos/request-face-recognition-discipline.dto';
 
 @Controller('disciplines')
 @ApiTags('Disciplines')
@@ -44,6 +45,40 @@ export class DisciplinesController {
     @ActiveUser() user: ActiveUserData,
   ) {
     return this.disciplinesService.createDiscipline(createDisciplineDto, user);
+  }
+
+  @ApiOperation({
+    summary: 'Start face recognition of the discipline',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'You get a 200 response if the camera opened successfully and start the face recognition',
+  })
+  @Post('/start-face-recognition')
+  public startFaceRecognition(
+    @Body() requestFaceRecognition: RequestFaceRecognitionDto,
+  ) {
+    return this.disciplinesService.startFaceRecognition(
+      requestFaceRecognition.id,
+    );
+  }
+
+  @ApiOperation({
+    summary: 'Stop face recognition of the discipline',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'You get a 200 response if the camera closed successfully and stop the face recognition',
+  })
+  @Post('/stop-face-recognition')
+  public stopFaceRecognition(
+    @Body() requestFaceRecognition: RequestFaceRecognitionDto,
+  ) {
+    return this.disciplinesService.stopFaceRecognition(
+      requestFaceRecognition.id,
+    );
   }
 
   @ApiOperation({
