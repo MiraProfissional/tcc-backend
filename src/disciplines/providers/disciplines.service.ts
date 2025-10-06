@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateDisciplineDto } from '../dtos/create-discipline.dto';
 import { ConfigType } from '@nestjs/config';
-import cameraApiConfig from '../config/cameraApi.config';
+import cameraApiConfig from '../config/faceRecognitionApi.config';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { CreateDisciplineProvider } from './create-discipline.provider';
 import { FindAllDisciplinesProvider } from './find-all-disciplines.provider';
@@ -10,19 +10,28 @@ import { UpdateDisciplineProvider } from './update-discipline.provider';
 import { DeleteDisciplineByIdProvider } from './delete-discipline-by-id.provider';
 import { SoftDeleteDisciplineByIdProvider } from './soft-delete-discipline-by-id.provider';
 import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
+import { FindOneDisciplineByIdProvider } from './find-one-discipline-by-id.provider';
+import { StartFaceRecognitionProvider } from './start-face-recognition.provider';
+import { StopFaceRecognitionProvider } from './stop-face-recognition.provider';
 
 @Injectable()
 export class DisciplinesService {
   constructor(
     private readonly createDisciplineProvider: CreateDisciplineProvider,
 
+    private readonly deleteDisciplineByIdProvider: DeleteDisciplineByIdProvider,
+
     private readonly findAllDisciplinesProvider: FindAllDisciplinesProvider,
+
+    private readonly findOneDisciplineByIdProvider: FindOneDisciplineByIdProvider,
 
     private readonly updateDisciplineProvider: UpdateDisciplineProvider,
 
-    private readonly deleteDisciplineByIdProvider: DeleteDisciplineByIdProvider,
-
     private readonly softDeleteDisciplineByIdProvider: SoftDeleteDisciplineByIdProvider,
+
+    private readonly startFaceRecognitionProvider: StartFaceRecognitionProvider,
+
+    private readonly stopFaceRecognitionProvider: StopFaceRecognitionProvider,
 
     @Inject(cameraApiConfig.KEY)
     private readonly cameraApiConfiguration: ConfigType<typeof cameraApiConfig>,
@@ -44,6 +53,12 @@ export class DisciplinesService {
     );
   }
 
+  public async findOneDisciplineById(disciplineId: number) {
+    return await this.findOneDisciplineByIdProvider.findOneDisciplineById(
+      disciplineId,
+    );
+  }
+
   public async updateDiscipline(patchDisciplineDto: PatchDisciplineDTO) {
     return await this.updateDisciplineProvider.updateDiscipline(
       patchDisciplineDto,
@@ -58,6 +73,18 @@ export class DisciplinesService {
 
   public async softDeleteDisciplineById(disciplineId: number) {
     return await this.softDeleteDisciplineByIdProvider.softDeleteDiscipline(
+      disciplineId,
+    );
+  }
+
+  public async startFaceRecognition(disciplineId: number) {
+    return await this.startFaceRecognitionProvider.startFaceRecognitionByDisciplineId(
+      disciplineId,
+    );
+  }
+
+  public async stopFaceRecognition(disciplineId: number) {
+    return await this.stopFaceRecognitionProvider.stopFaceRecognitionByDisciplineId(
       disciplineId,
     );
   }

@@ -44,7 +44,6 @@ export class UploadUserFaceProvider {
       throw new Error('Face API link is not configured.');
     }
 
-    // Cria o FormData para envio
     const formData = new FormData();
     formData.append('file', file.buffer, {
       filename: newFileName,

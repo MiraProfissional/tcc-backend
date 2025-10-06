@@ -1,13 +1,7 @@
-POST http://localhost:3000/disciplines/
+POST http://localhost:3000/disciplines/stop-face-recognition
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInJvbGUiOiJURUFDSEVSIiwiZW1haWwiOiJWaXRvck1pcmFAZW1haWwuY29tIiwiaWF0IjoxNzU5NzYxOTY4LCJleHAiOjE3NTk4NDgzNjgsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.50TBZcmdHo6dA7odpptKM3-oUKnBGPoplsN2egcKx9I
 
 {
-    "name" :"Aula 1",
-    "code": "SDES09",
-    "semester": "2025.1",
-    "disciplineTime": ["5T34","2N12"],
-    "disciplineRoom": "C1113",
-    "ipCamera": 0,
-    "students": [7]
+    "id": 8
 }

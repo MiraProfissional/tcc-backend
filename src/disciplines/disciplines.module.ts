@@ -5,13 +5,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Discipline } from './discipline.entity';
 import { DisciplinesService } from './providers/disciplines.service';
 import { ConfigModule } from '@nestjs/config';
-import cameraApiConfig from './config/cameraApi.config';
+import cameraApiConfig from './config/faceRecognitionApi.config';
 import { PaginationModule } from 'src/common/pagination/pagination.module';
 import { CreateDisciplineProvider } from './providers/create-discipline.provider';
 import { FindAllDisciplinesProvider } from './providers/find-all-disciplines.provider';
 import { DeleteDisciplineByIdProvider } from './providers/delete-discipline-by-id.provider';
 import { SoftDeleteDisciplineByIdProvider } from './providers/soft-delete-discipline-by-id.provider';
 import { UpdateDisciplineProvider } from './providers/update-discipline.provider';
+import { StartFaceRecognitionProvider } from './providers/start-face-recognition.provider';
+import { FindOneDisciplineByIdProvider } from './providers/find-one-discipline-by-id.provider';
+import { StopFaceRecognitionProvider } from './providers/stop-face-recognition.provider';
 
 @Module({
   controllers: [DisciplinesController],
@@ -22,6 +25,9 @@ import { UpdateDisciplineProvider } from './providers/update-discipline.provider
     DeleteDisciplineByIdProvider,
     SoftDeleteDisciplineByIdProvider,
     UpdateDisciplineProvider,
+    StartFaceRecognitionProvider,
+    FindOneDisciplineByIdProvider,
+    StopFaceRecognitionProvider,
   ],
   imports: [
     UsersModule,
@@ -29,5 +35,6 @@ import { UpdateDisciplineProvider } from './providers/update-discipline.provider
     TypeOrmModule.forFeature([Discipline]),
     ConfigModule.forFeature(cameraApiConfig),
   ],
+  exports: [DisciplinesService],
 })
 export class DisciplinesModule {}
