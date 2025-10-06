@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import uploadFaceApiConfig from './config/uploadFaceApi.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Upload } from './upload.entity';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   controllers: [UploadsController],
@@ -13,6 +14,7 @@ import { Upload } from './upload.entity';
   imports: [
     ConfigModule.forFeature(uploadFaceApiConfig),
     TypeOrmModule.forFeature([Upload]),
+    UsersModule,
   ],
 })
 export class UploadsModule {}

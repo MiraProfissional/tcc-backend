@@ -5,18 +5,39 @@ import { v4 as uuid4 } from 'uuid';
 import * as FormData from 'form-data';
 import axios from 'axios';
 import uploadFaceApiConfig from '../config/uploadFaceApi.config';
+import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
+import { Student } from 'src/users/entities/student.entity';
+import { Teacher } from 'src/users/entities/teacher.entity';
+import { StudentsService } from 'src/users/providers/students/students.service';
+import { TeachersService } from 'src/users/providers/teachers/teachers.service';
+import { UserRole } from 'src/users/enums/user-role.enum';
 
 @Injectable()
 export class UploadUserFaceProvider {
   constructor(
+    private readonly studenstService: StudentsService,
+
+    private readonly teachersService: TeachersService,
+
     @Inject(uploadFaceApiConfig.KEY)
     private readonly uploadFaceApiConfiguration: ConfigType<
       typeof uploadFaceApiConfig
     >,
   ) {}
 
-  public async sendImageToFaceRecognitionBackend(file: Express.Multer.File) {
-    const newFileName = this.generateFileName(file);
+  public async sendImageToFaceRecognitionBackend(
+    file: Express.Multer.File,
+    user: ActiveUserData,
+  ) {
+    let activeUser: Student | Teacher;
+
+    if (user.role == UserRole.STUDENT) {
+      activeUser = await this.studenstService.findOneStudentById(user.sub);
+    } else {
+      activeUser = await this.teachersService.findOneTeacherById(user.sub);
+    }
+
+    const newFileName = this.generateFileName(file, activeUser);
 
     const apiLink = this.uploadFaceApiConfiguration.userFaceApiLink;
     if (!apiLink) {
@@ -44,8 +65,13 @@ export class UploadUserFaceProvider {
     }
   }
 
-  private generateFileName(file: Express.Multer.File): string {
-    const name = file.originalname.split('.')[0].replace(/\s/g, '').trim();
+  private generateFileName(
+    file: Express.Multer.File,
+    user: Student | Teacher,
+  ): string {
+    const name = `${user.registrationNumber}-${user.firstName}-${user.lastName}`
+      .replace(/\s/g, '')
+      .trim();
     const extension = path.extname(file.originalname);
     const timestamp = new Date().getTime().toString().trim();
     return `${name}-${timestamp}-${uuid4()}${extension}`;

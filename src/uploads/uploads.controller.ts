@@ -8,6 +8,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadsService } from './providers/uploads.service';
 import { ApiHeaders, ApiOperation } from '@nestjs/swagger';
 import { Express } from 'express';
+import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
+import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 
 @Controller('uploads')
 export class UploadsController {
@@ -22,7 +24,10 @@ export class UploadsController {
     summary: 'Upload a user face image to the face-recognition server',
   })
   @Post('user-face')
-  public uploadUserFaceImage(@UploadedFile() file: Express.Multer.File) {
-    return this.uploadsService.uploadUserFaceImage(file);
+  public uploadUserFaceImage(
+    @UploadedFile() file: Express.Multer.File,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.uploadsService.uploadUserFaceImage(file, user);
   }
 }
