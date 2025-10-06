@@ -4,10 +4,13 @@ import faceRecognitionApiLink from '../config/faceRecognitionApi.config';
 import { DisciplinesService } from './disciplines.service';
 import { Discipline } from '../discipline.entity';
 import axios from 'axios';
+import { SessionsService } from 'src/sessions/providers/sessions.service';
 
 @Injectable()
 export class StopFaceRecognitionProvider {
   constructor(
+    private readonly sessionsService: SessionsService,
+
     @Inject(forwardRef(() => DisciplinesService))
     private readonly disciplinesService: DisciplinesService,
 
@@ -34,7 +37,9 @@ export class StopFaceRecognitionProvider {
         },
       });
 
-      return response.data;
+      console.log('responde from backend Pyhton, STOP method', response.data);
+
+      return true;
     } catch (error) {
       console.error(
         'Error stopping face recognition in Python Backend Face Recognition API:',
@@ -45,4 +50,6 @@ export class StopFaceRecognitionProvider {
       );
     }
   }
+
+  private async createSession() {}
 }
