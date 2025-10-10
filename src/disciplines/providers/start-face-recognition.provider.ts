@@ -4,6 +4,7 @@ import faceRecognitionApiLink from '../config/faceRecognitionApi.config';
 import { DisciplinesService } from './disciplines.service';
 import { Discipline } from '../discipline.entity';
 import axios from 'axios';
+import { StartFaceRecognitionInterface } from '../interface/start-face-recognition.interface';
 
 @Injectable()
 export class StartFaceRecognitionProvider {
@@ -28,7 +29,7 @@ export class StartFaceRecognitionProvider {
     }
 
     try {
-      const response = await axios.post(
+      const { data } = await axios.post<StartFaceRecognitionInterface>(
         `${apiLink}/${discipline.id}?cam=${discipline.ipCamera}`,
         {
           headers: {
@@ -37,7 +38,7 @@ export class StartFaceRecognitionProvider {
         },
       );
 
-      return response.data;
+      return data;
     } catch (error) {
       console.error(
         'Error starting face recognition in Python Backend Face Recognition API:',

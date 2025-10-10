@@ -19,6 +19,12 @@ export class Session {
   id: number;
 
   @Column({
+    type: 'date',
+    nullable: false,
+  })
+  day: string;
+
+  @Column({
     type: 'timestamp',
     nullable: false,
   })
