@@ -42,9 +42,7 @@ export class Session {
   })
   cameraIndex: number;
 
-  @ManyToOne(() => Discipline, (discipline) => discipline.sessions, {
-    eager: true,
-  })
+  @ManyToOne(() => Discipline, (discipline) => discipline.sessions)
   discipline: Discipline;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.sessionResponsible, {
