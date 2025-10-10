@@ -1,4 +1,4 @@
-import { Session } from 'src/sessions/session.entity';
+import { Discipline } from 'src/disciplines/discipline.entity';
 import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import {
@@ -9,71 +9,58 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class Discipline {
+export class Session {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
-    type: 'varchar',
-    length: 96,
+    type: 'date',
     nullable: false,
   })
-  name: string;
+  day: string;
 
   @Column({
-    type: 'varchar',
-    length: 24,
+    type: 'timestamp',
     nullable: false,
   })
-  code: string;
+  startedAt: Date;
 
   @Column({
-    type: 'varchar',
-    length: 24,
+    type: 'timestamp',
     nullable: false,
   })
-  semester: string;
-
-  @Column('text', {
-    array: true,
-    nullable: false,
-  })
-  disciplineTime: string[];
-
-  @Column({
-    type: 'varchar',
-    length: 24,
-    nullable: false,
-  })
-  disciplineRoom: string;
+  endedAt: Date;
 
   @Column({
     type: 'int',
     nullable: false,
   })
-  ipCamera: number;
+  cameraIndex: number;
 
-  @ManyToOne(() => Teacher, (teacher) => teacher.disciplines, {
+  @ManyToOne(() => Discipline, (discipline) => discipline.sessions)
+  discipline: Discipline;
+
+  @ManyToOne(() => Teacher, (teacher) => teacher.sessionResponsible, {
     eager: true,
   })
-  teacher: Teacher;
+  openedBy: Teacher;
 
-  @ManyToMany(() => Student, (student) => student.disciplines, {
+  @ManyToMany(() => Student, (student) => student.presentSessions, {
     eager: true,
   })
   @JoinTable()
-  students?: Student[];
+  presentStudents: Student[];
 
-  @OneToMany(() => Session, (session) => session.discipline, {
+  @ManyToMany(() => Student, (student) => student.absentSessions, {
     eager: true,
   })
-  sessions?: Session[];
+  @JoinTable()
+  absentStudents: Student[];
 
   @CreateDateColumn()
   createDate: Date;

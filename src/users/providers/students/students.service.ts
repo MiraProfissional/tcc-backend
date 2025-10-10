@@ -52,7 +52,7 @@ export class StudentsService {
   }
 
   public async findMultipleStudentsById(studentsIds: number[]) {
-    return this.findMultipleStudentsByIdProvider.findMultipleStudents(
+    return this.findMultipleStudentsByIdProvider.findMultipleStudentsById(
       studentsIds,
     );
   }

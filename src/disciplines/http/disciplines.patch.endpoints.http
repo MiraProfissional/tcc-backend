@@ -1,7 +1,8 @@
 PATCH http://localhost:3000/disciplines/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE3LCJyb2xlIjoiU1RVREVOVCIsImVtYWlsIjoiVGVzdEJhY2tlbmRAZW1haWwuY29tIiwiaWF0IjoxNzU5OTM0MDkzLCJleHAiOjE3NjAwMjA0OTMsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ._NDY_vFSnRkMEMVGQ2ePkKleV9Fu4iK37XePHy0hHt4
 
 {
-    "id": 6,
-    "students": [4,11]
+    "id": 8,
+    "students": [17]
 }

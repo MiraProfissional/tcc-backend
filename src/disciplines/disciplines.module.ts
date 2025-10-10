@@ -15,6 +15,7 @@ import { UpdateDisciplineProvider } from './providers/update-discipline.provider
 import { StartFaceRecognitionProvider } from './providers/start-face-recognition.provider';
 import { FindOneDisciplineByIdProvider } from './providers/find-one-discipline-by-id.provider';
 import { StopFaceRecognitionProvider } from './providers/stop-face-recognition.provider';
+import { SessionsModule } from 'src/sessions/sessions.module';
 
 @Module({
   controllers: [DisciplinesController],
@@ -34,6 +35,7 @@ import { StopFaceRecognitionProvider } from './providers/stop-face-recognition.p
     PaginationModule,
     TypeOrmModule.forFeature([Discipline]),
     ConfigModule.forFeature(cameraApiConfig),
+    SessionsModule,
   ],
   exports: [DisciplinesService],
 })

@@ -17,7 +17,7 @@ export class FindMultipleStudentsByIdProvider {
   /**
    * The method to get multiple students from the database with ID
    */
-  public async findMultipleStudents(
+  public async findMultipleStudentsById(
     studentsIds: number[],
   ): Promise<Array<Student>> {
     let students: Array<Student> | null;
