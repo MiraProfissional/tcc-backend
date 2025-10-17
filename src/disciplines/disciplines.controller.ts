@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { DisciplinesService } from './providers/disciplines.service';
 import { CreateDisciplineDto } from './dtos/create-discipline.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PatchDisciplineDTO } from './dtos/patch-discipline.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
@@ -23,11 +23,29 @@ import { RequestFaceRecognitionDto } from './dtos/request-face-recognition-disci
 export class DisciplinesController {
   constructor(private readonly disciplinesService: DisciplinesService) {}
 
+  @ApiOperation({
+    summary: 'Fetches a list of disciplines on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Disciplines fetched succesfully based on the query',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: 'number',
+    required: false,
+    description: 'The number of entries returned per query',
+    example: 10,
+  })
+  @ApiQuery({
+    name: 'page',
+    type: 'number',
+    required: false,
+    description: 'The position of the page that you want the API to return',
+    example: 1,
+  })
   @Get('/{:userId}')
-  public getPosts(
-    @Param('userId') userId: string,
-    @Query() paginationQueryDto: PaginationQueryDto,
-  ) {
+  public getPosts(@Query() paginationQueryDto: PaginationQueryDto) {
     return this.disciplinesService.findAllDisciplines(paginationQueryDto);
   }
 

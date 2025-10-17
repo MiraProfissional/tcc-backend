@@ -23,7 +23,6 @@ import { PatchTeacherDto } from '../dtos/teachers/patch-teacher.dto';
 export class TeachersController {
   constructor(private readonly teachersService: TeachersService) {}
 
-  @Get('/{:id}')
   @ApiOperation({
     summary: 'Fetches a list of registered users on the application',
   })
@@ -45,6 +44,7 @@ export class TeachersController {
     description: 'The position of the page that you want the API to return',
     example: 1,
   })
+  @Get('/{:id}')
   public get(@Param() getUsersParamDto?: GetUsersParamDto) {
     console.log(getUsersParamDto);
     return this.teachersService.findAll();
@@ -64,17 +64,38 @@ export class TeachersController {
     return this.teachersService.createTeacher(createTeacherDto);
   }
 
+  @ApiOperation({
+    summary: 'Updates a teacher on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Teacher updated succesfully',
+  })
   @Patch()
   public patch(@Body() patchTeacherDto: PatchTeacherDto) {
     console.log(patchTeacherDto);
     return 'You sent a PATCH request';
   }
 
+  @ApiOperation({
+    summary: 'Deletes a teacher on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Teacher deleted succesfully',
+  })
   @Delete()
   public deleteTeacher(@Query('id', ParseIntPipe) id: number) {
     return this.teachersService.deleteTeacherById(id);
   }
 
+  @ApiOperation({
+    summary: 'Soft deletes a teacher on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Teacher soft deleted succesfully',
+  })
   @Delete('/soft-delete')
   public softDeleteTeacher(@Query('id', ParseIntPipe) id: number) {
     return this.teachersService.softDeleteTeacherById(id);

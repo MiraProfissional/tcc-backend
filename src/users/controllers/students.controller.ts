@@ -65,17 +65,38 @@ export class StudentsController {
     return this.studentsService.createStudent(createStudentDto);
   }
 
+  @ApiOperation({
+    summary: 'Updates a student on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Student updated succesfully',
+  })
   @Patch()
   public patchStudent(@Body() patchStudentDto: PatchStudentDto) {
     console.log(patchStudentDto);
     return 'You sent a PATCH request';
   }
 
+  @ApiOperation({
+    summary: 'Deletes a student on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Student deleted succesfully',
+  })
   @Delete()
   public deleteStudent(@Query('id', ParseIntPipe) id: number) {
     return this.studentsService.deleteStudentById(id);
   }
 
+  @ApiOperation({
+    summary: 'Soft deletes a student on the application',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Student soft deleted succesfully',
+  })
   @Delete('/soft-delete')
   public softDeleteStudent(@Query('id', ParseIntPipe) id: number) {
     return this.studentsService.softDeleteStudentById(id);
