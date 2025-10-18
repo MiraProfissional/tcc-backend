@@ -18,6 +18,7 @@ import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { AuthType } from 'src/auth/enums/auth-type.enum';
 import { PatchTeacherDto } from '../dtos/teachers/patch-teacher.dto';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 
 @Controller('teachers')
 export class TeachersController {
@@ -45,9 +46,14 @@ export class TeachersController {
     example: 1,
   })
   @Get('/{:id}')
-  public get(@Param() getUsersParamDto?: GetUsersParamDto) {
-    console.log(getUsersParamDto);
-    return this.teachersService.findAll();
+  public get(
+    @Param() getUsersParamDto: GetUsersParamDto,
+    @Query() paginationQueryDto: PaginationQueryDto,
+  ) {
+    return this.teachersService.findTeachers(
+      getUsersParamDto,
+      paginationQueryDto,
+    );
   }
 
   @ApiOperation({

@@ -1,41 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { Discipline } from '../discipline.entity';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { Paginated } from 'src/common/pagination/interfaces/paginated.interface';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { Teacher } from 'src/users/entities/teacher.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
-export class FindAllDisciplinesProvider {
+export class FindAllTeachersProvider {
   constructor(
-    @InjectRepository(Discipline)
-    private disciplineRepository: Repository<Discipline>,
+    @InjectRepository(Teacher)
+    private teachersRepository: Repository<Teacher>,
 
     private readonly paginationProvider: PaginationProvider,
   ) {}
 
-  public async findAllDisiplines(
+  public async findAllTeachers(
     paginationQueryDto: PaginationQueryDto,
-  ): Promise<Paginated<Discipline>> {
-    let disciplines: Paginated<Discipline> | undefined;
+  ): Promise<Paginated<Teacher>> {
+    let teachers: Paginated<Teacher> | undefined;
 
     try {
-      disciplines = await this.paginationProvider.paginateQuery(
+      teachers = await this.paginationProvider.paginateQuery(
         {
-          limit: paginationQueryDto.limit,
+          limit: paginationQueryDto?.limit,
           page: paginationQueryDto.page,
         },
-        this.disciplineRepository,
+        this.teachersRepository,
       );
     } catch (error) {
       throw new Error(`Error finding disciplines: ${error}`);
     }
 
-    if (!disciplines) {
+    if (!teachers) {
       throw new Error('No disciplines found');
     }
 
-    return disciplines;
+    return teachers;
   }
 }

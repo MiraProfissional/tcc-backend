@@ -25,6 +25,9 @@ import { FindOneStudentByGoogleIdProvider } from './providers/students/find-one-
 import { FindOneTeacherByGoogleIdProvider } from './providers/teachers/find-one-teacher-by-google-id.provider';
 import { CreateGoogleStudentProvider } from './providers/students/create-google-student.provider';
 import { CreateGoogleTeacherProvider } from './providers/teachers/create-google-teacher.provider';
+import { FindAllTeachersProvider } from './providers/teachers/find-all-teachers.provider';
+import { FindAllStudentsProvider } from './providers/students/find-all-students.provider';
+import { PaginationModule } from 'src/common/pagination/pagination.module';
 
 @Module({
   controllers: [TeachersController, StudentsController],
@@ -49,11 +52,14 @@ import { CreateGoogleTeacherProvider } from './providers/teachers/create-google-
     FindOneTeacherByGoogleIdProvider,
     CreateGoogleStudentProvider,
     CreateGoogleTeacherProvider,
+    FindAllTeachersProvider,
+    FindAllStudentsProvider,
   ],
   exports: [TeachersService, StudentsService],
   imports: [
     forwardRef(() => AuthModule),
     TypeOrmModule.forFeature([Student, Teacher]),
+    PaginationModule,
   ],
 })
 export class UsersModule {}

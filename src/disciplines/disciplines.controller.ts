@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   ParseIntPipe,
   Patch,
   Post,
@@ -44,7 +43,7 @@ export class DisciplinesController {
     description: 'The position of the page that you want the API to return',
     example: 1,
   })
-  @Get('/{:userId}')
+  @Get('/{:disciplineId}')
   public getPosts(@Query() paginationQueryDto: PaginationQueryDto) {
     return this.disciplinesService.findAllDisciplines(paginationQueryDto);
   }

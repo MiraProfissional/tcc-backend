@@ -11,6 +11,9 @@ import { FindOneTeacherByEmailProvider } from './find-one-teacher-by-email.provi
 import { FindOneTeacherByGoogleIdProvider } from './find-one-teacher-by-google-id.provider';
 import { CreateGoogleTeacherProvider } from './create-google-teacher.provider';
 import { GoogleTeacher } from 'src/users/interfaces/google-teacher.interface';
+import { GetUsersParamDto } from 'src/users/dtos/users/get-users-param.dto';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { FindAllTeachersProvider } from './find-all-teachers.provider';
 
 @Injectable()
 export class TeachersService {
@@ -23,6 +26,8 @@ export class TeachersService {
     private readonly createTeacherProvider: CreateTeacherProvider,
 
     private readonly deleteTeacherByIdProvider: DeleteTeacherByIdProvider,
+
+    private readonly findAllTeachersProvider: FindAllTeachersProvider,
 
     private readonly findMultipleTeachersByIdProvider: FindMultipleTeachersByIdProvider,
 
@@ -47,8 +52,17 @@ export class TeachersService {
     return await this.createTeacherProvider.createTeacher(createTeacherDto);
   }
 
-  public findAll() {
-    return 'Find all method';
+  public findTeachers(
+    getUsersParamDto: GetUsersParamDto,
+    paginationQueryDto: PaginationQueryDto,
+  ) {
+    if (getUsersParamDto?.id) {
+      return this.findOneTeacherByIdProvider.findOneTeacherById(
+        getUsersParamDto.id,
+      );
+    } else {
+      return this.findAllTeachersProvider.findAllTeachers(paginationQueryDto);
+    }
   }
 
   public async findMultipleTeachersById(teachersIds: number[]) {
