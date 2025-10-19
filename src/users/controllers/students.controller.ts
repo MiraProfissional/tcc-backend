@@ -18,6 +18,7 @@ import { CreateStudentDto } from '../dtos/students/create-student.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { AuthType } from 'src/auth/enums/auth-type.enum';
 import { PatchStudentDto } from '../dtos/students/patch-student.dto';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 
 @Controller('students')
 @ApiTags('Students')
@@ -46,9 +47,14 @@ export class StudentsController {
     example: 1,
   })
   @Get('/{:id}')
-  public getStudents(@Param() getUsersParamDto?: GetUsersParamDto) {
-    console.log(getUsersParamDto);
-    return this.studentsService.findAll();
+  public getStudents(
+    @Param() getUsersParamDto: GetUsersParamDto,
+    @Query() paginationQueryDto: PaginationQueryDto,
+  ) {
+    return this.studentsService.findStudents(
+      getUsersParamDto,
+      paginationQueryDto,
+    );
   }
 
   @ApiOperation({

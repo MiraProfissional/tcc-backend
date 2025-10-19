@@ -10,6 +10,9 @@ import { FindOneStudentByEmailProvider } from './find-one-student-by-email.provi
 import { FindOneStudentByGoogleIdProvider } from './find-one-student-by-google-id.provider';
 import { CreateGoogleStudentProvider } from './create-google-student.provider';
 import { GoogleStudent } from 'src/users/interfaces/google-student.interface';
+import { GetUsersParamDto } from 'src/users/dtos/users/get-users-param.dto';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { FindAllStudentsProvider } from './find-all-students.provider';
 
 @Injectable()
 export class StudentsService {
@@ -19,6 +22,8 @@ export class StudentsService {
     private readonly createStudentProvider: CreateStudentProvider,
 
     private readonly deleteStudentByIdProvider: DeleteStudentByIdProvider,
+
+    private readonly findAllStudentsProvider: FindAllStudentsProvider,
 
     private readonly findMultipleStudentsByIdProvider: FindMultipleStudentsByIdProvider,
 
@@ -43,8 +48,17 @@ export class StudentsService {
     return this.createStudentProvider.createStudent(createStudentDto);
   }
 
-  public findAll() {
-    return 'Find all method';
+  public findStudents(
+    getUsersParamDto: GetUsersParamDto,
+    paginationQueryDto: PaginationQueryDto,
+  ) {
+    if (getUsersParamDto?.id) {
+      return this.findOneStudentByIdProvider.findOneStudentById(
+        getUsersParamDto.id,
+      );
+    } else {
+      return this.findAllStudentsProvider.findAllStudents(paginationQueryDto);
+    }
   }
 
   public async findMultipleStudentsById(studentsIds: number[]) {

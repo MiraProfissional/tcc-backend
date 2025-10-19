@@ -29,11 +29,11 @@ export class FindAllTeachersProvider {
         this.teachersRepository,
       );
     } catch (error) {
-      throw new Error(`Error finding disciplines: ${error}`);
+      throw new Error(`Error finding teachers: ${error}`);
     }
 
     if (!teachers) {
-      throw new Error('No disciplines found');
+      throw new Error('No teachers found');
     }
 
     return teachers;
