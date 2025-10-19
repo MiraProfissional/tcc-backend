@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { FindOneStudentByIdProvider } from './find-one-student-by-id.provider';
 import { CreateStudentProvider } from './create-student.provider';
 import { CreateStudentDto } from 'src/users/dtos/students/create-student.dto';
@@ -6,7 +6,6 @@ import { DeleteStudentByIdProvider } from './delete-student-by-id.provider';
 import { FindMultipleStudentsByIdProvider } from './find-multiple-students-by-id.provider';
 import { FindOneStudentByRegistrationNumberProvider } from './find-one-student-by-registration-number.provider';
 import { SoftDeleteStudentByIdProvider } from './soft-delete-student-by-id.provider';
-import { AuthService } from 'src/auth/providers/auth.service';
 import { FindOneStudentByEmailProvider } from './find-one-student-by-email.provider';
 import { FindOneStudentByGoogleIdProvider } from './find-one-student-by-google-id.provider';
 import { CreateGoogleStudentProvider } from './create-google-student.provider';
@@ -15,9 +14,6 @@ import { GoogleStudent } from 'src/users/interfaces/google-student.interface';
 @Injectable()
 export class StudentsService {
   constructor(
-    @Inject(forwardRef(() => AuthService))
-    private readonly authService: AuthService,
-
     private readonly createGoogleStudentProvider: CreateGoogleStudentProvider,
 
     private readonly createStudentProvider: CreateStudentProvider,

@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { FindOneTeacherByIdProvider } from './find-one-teacher-by-id.provider';
 import { CreateTeacherProvider } from './create-teacher.provider';
 import { CreateTeacherDto } from 'src/users/dtos/teachers/create-teacher.dto';
@@ -6,7 +6,6 @@ import { FindOneTeacherByRegistrationNumberProvider } from './find-one-teacher-b
 import { SoftDeleteTeacherByIdProvider } from './soft-delete-teacher-by-id.provider';
 import { DeleteTeacherByIdProvider } from './delete-teacher-by-id.provider';
 import { FindMultipleTeachersByIdProvider } from './find-multiple-teachers-by-id.provider';
-import { AuthService } from 'src/auth/providers/auth.service';
 import { FindOneTeacherByEmailProvider } from './find-one-teacher-by-email.provider';
 import { FindOneTeacherByGoogleIdProvider } from './find-one-teacher-by-google-id.provider';
 import { CreateGoogleTeacherProvider } from './create-google-teacher.provider';
@@ -18,9 +17,6 @@ import { FindAllTeachersProvider } from './find-all-teachers.provider';
 @Injectable()
 export class TeachersService {
   constructor(
-    @Inject(forwardRef(() => AuthService))
-    private readonly authService: AuthService,
-
     private readonly createGoogleTeacherProvider: CreateGoogleTeacherProvider,
 
     private readonly createTeacherProvider: CreateTeacherProvider,
