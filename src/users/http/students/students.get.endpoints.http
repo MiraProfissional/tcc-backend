@@ -1,1 +1,4 @@
-GET http://localhost:3000/students/123
+GET http://localhost:3000/students/
+?limit=10
+&page=1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE5LCJyb2xlIjoiU1RVREVOVCIsImVtYWlsIjoiVGVzdEJhY2tlbmQyQGVtYWlsLmNvbSIsImlhdCI6MTc2MDg4MTc5OCwiZXhwIjoxNzYwOTY4MTk4LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.CblaYB4bfK7hTLo5KS4NUEtjlKuEhVILmzJ74wm4SuI

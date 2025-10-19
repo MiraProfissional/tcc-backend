@@ -40,6 +40,7 @@ export abstract class User {
     type: 'varchar',
     length: 96,
     nullable: true,
+    select: false,
   })
   @Exclude()
   password?: string;
@@ -47,6 +48,7 @@ export abstract class User {
   @Column({
     type: 'varchar',
     nullable: true,
+    select: false,
   })
   @Exclude()
   googleId?: string;

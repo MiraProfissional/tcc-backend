@@ -1,6 +1,5 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -9,7 +8,6 @@ import {
   Patch,
   Post,
   Query,
-  UseInterceptors,
 } from '@nestjs/common';
 import { TeachersService } from '../providers/teachers/teachers.service';
 import { GetUsersParamDto } from '../dtos/users/get-users-param.dto';
@@ -65,7 +63,6 @@ export class TeachersController {
   })
   @Post()
   @Auth(AuthType.None)
-  @UseInterceptors(ClassSerializerInterceptor)
   public postTeacher(@Body() createTeacherDto: CreateTeacherDto) {
     return this.teachersService.createTeacher(createTeacherDto);
   }
