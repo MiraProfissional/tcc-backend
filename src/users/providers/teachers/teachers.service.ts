@@ -10,7 +10,7 @@ import { FindOneTeacherByEmailProvider } from './find-one-teacher-by-email.provi
 import { FindOneTeacherByGoogleIdProvider } from './find-one-teacher-by-google-id.provider';
 import { CreateGoogleTeacherProvider } from './create-google-teacher.provider';
 import { GoogleTeacher } from 'src/users/interfaces/google-teacher.interface';
-import { GetUsersParamDto } from 'src/users/dtos/users/get-users-param.dto';
+import { GetUserParamDto } from 'src/users/dtos/users/get-users-param.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { FindAllTeachersProvider } from './find-all-teachers.provider';
 
@@ -49,12 +49,12 @@ export class TeachersService {
   }
 
   public findTeachers(
-    getUsersParamDto: GetUsersParamDto,
+    getUserParamDto: GetUserParamDto,
     paginationQueryDto: PaginationQueryDto,
   ) {
-    if (getUsersParamDto?.id) {
+    if (getUserParamDto?.id) {
       return this.findOneTeacherByIdProvider.findOneTeacherById(
-        getUsersParamDto.id,
+        getUserParamDto.id,
       );
     } else {
       return this.findAllTeachersProvider.findAllTeachers(paginationQueryDto);

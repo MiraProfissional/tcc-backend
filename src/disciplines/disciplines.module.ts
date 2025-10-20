@@ -15,6 +15,7 @@ import { UpdateDisciplineProvider } from './providers/update-discipline.provider
 import { StartFaceRecognitionProvider } from './providers/start-face-recognition.provider';
 import { FindOneDisciplineByIdProvider } from './providers/find-one-discipline-by-id.provider';
 import { StopFaceRecognitionProvider } from './providers/stop-face-recognition.provider';
+import { FindDisciplinesByUserIdProvider } from './providers/find-disciplines-by-user-id.provider';
 import { SessionsModule } from 'src/sessions/sessions.module';
 
 @Module({
@@ -29,6 +30,7 @@ import { SessionsModule } from 'src/sessions/sessions.module';
     StartFaceRecognitionProvider,
     FindOneDisciplineByIdProvider,
     StopFaceRecognitionProvider,
+    FindDisciplinesByUserIdProvider,
   ],
   imports: [
     UsersModule,

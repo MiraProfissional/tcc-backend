@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   ParseIntPipe,
   Patch,
   Post,
@@ -16,6 +17,7 @@ import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.
 import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
 import { RequestFaceRecognitionDto } from './dtos/request-face-recognition-discipline.dto';
+import { GetDisciplineParamDto } from './dtos/get-discipline-param.dto';
 
 @Controller('disciplines')
 @ApiTags('Disciplines')
@@ -44,8 +46,32 @@ export class DisciplinesController {
     example: 1,
   })
   @Get('/{:disciplineId}')
-  public getPosts(@Query() paginationQueryDto: PaginationQueryDto) {
-    return this.disciplinesService.findAllDisciplines(paginationQueryDto);
+  public getPosts(
+    @Param() getDisciplineParam: GetDisciplineParamDto,
+    @Query() paginationQueryDto: PaginationQueryDto,
+  ) {
+    return this.disciplinesService.findDisciplines(
+      getDisciplineParam,
+      paginationQueryDto,
+    );
+  }
+
+  @ApiOperation({
+    summary: 'Fetches disciplines related to the authenticated user',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Disciplines for the authenticated user',
+  })
+  @Get('/by/user')
+  public getByUser(
+    @ActiveUser() user: ActiveUserData,
+    @Query() paginationQueryDto: PaginationQueryDto,
+  ) {
+    return this.disciplinesService.findDisciplinesByUserId(
+      user,
+      paginationQueryDto,
+    );
   }
 
   @ApiOperation({

@@ -10,7 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { TeachersService } from '../providers/teachers/teachers.service';
-import { GetUsersParamDto } from '../dtos/users/get-users-param.dto';
+import { GetUserParamDto } from '../dtos/users/get-users-param.dto';
 import { CreateTeacherDto } from '../dtos/teachers/create-teacher.dto';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { Auth } from 'src/auth/decorators/auth.decorator';
@@ -45,11 +45,11 @@ export class TeachersController {
   })
   @Get('/{:id}')
   public get(
-    @Param() getUsersParamDto: GetUsersParamDto,
+    @Param() getUserParamDto: GetUserParamDto,
     @Query() paginationQueryDto: PaginationQueryDto,
   ) {
     return this.teachersService.findTeachers(
-      getUsersParamDto,
+      getUserParamDto,
       paginationQueryDto,
     );
   }

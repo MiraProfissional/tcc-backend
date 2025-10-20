@@ -1,9 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsInt, IsOptional } from 'class-validator';
 
-export class GetUserParamDto {
+export class GetDisciplineParamDto {
   @ApiPropertyOptional({
-    description: 'Get user with a specific id',
+    description: 'Get discipline with a specific id',
     example: 123,
   })
   @IsOptional()

@@ -10,7 +10,7 @@ import { FindOneStudentByEmailProvider } from './find-one-student-by-email.provi
 import { FindOneStudentByGoogleIdProvider } from './find-one-student-by-google-id.provider';
 import { CreateGoogleStudentProvider } from './create-google-student.provider';
 import { GoogleStudent } from 'src/users/interfaces/google-student.interface';
-import { GetUsersParamDto } from 'src/users/dtos/users/get-users-param.dto';
+import { GetUserParamDto } from 'src/users/dtos/users/get-users-param.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { FindAllStudentsProvider } from './find-all-students.provider';
 
@@ -49,7 +49,7 @@ export class StudentsService {
   }
 
   public findStudents(
-    getUsersParamDto: GetUsersParamDto,
+    getUsersParamDto: GetUserParamDto,
     paginationQueryDto: PaginationQueryDto,
   ) {
     if (getUsersParamDto?.id) {

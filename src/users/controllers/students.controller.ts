@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StudentsService } from '../providers/students/students.service';
-import { GetUsersParamDto } from '../dtos/users/get-users-param.dto';
+import { GetUserParamDto } from '../dtos/users/get-users-param.dto';
 import { CreateStudentDto } from '../dtos/students/create-student.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { AuthType } from 'src/auth/enums/auth-type.enum';
@@ -48,11 +48,11 @@ export class StudentsController {
   })
   @Get('/{:id}')
   public getStudents(
-    @Param() getUsersParamDto: GetUsersParamDto,
+    @Param() getUserParamDto: GetUserParamDto,
     @Query() paginationQueryDto: PaginationQueryDto,
   ) {
     return this.studentsService.findStudents(
-      getUsersParamDto,
+      getUserParamDto,
       paginationQueryDto,
     );
   }

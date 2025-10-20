@@ -13,6 +13,8 @@ import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { FindOneDisciplineByIdProvider } from './find-one-discipline-by-id.provider';
 import { StartFaceRecognitionProvider } from './start-face-recognition.provider';
 import { StopFaceRecognitionProvider } from './stop-face-recognition.provider';
+import { FindDisciplinesByUserIdProvider } from './find-disciplines-by-user-id.provider';
+import { GetDisciplineParamDto } from '../dtos/get-discipline-param.dto';
 
 @Injectable()
 export class DisciplinesService {
@@ -33,14 +35,25 @@ export class DisciplinesService {
 
     private readonly stopFaceRecognitionProvider: StopFaceRecognitionProvider,
 
+    private readonly findDisciplinesByUserIdProvider: FindDisciplinesByUserIdProvider,
+
     @Inject(cameraApiConfig.KEY)
     private readonly cameraApiConfiguration: ConfigType<typeof cameraApiConfig>,
   ) {}
 
-  public async findAllDisciplines(paginationQueryDto: PaginationQueryDto) {
-    return await this.findAllDisciplinesProvider.findAllDisiplines(
-      paginationQueryDto,
-    );
+  public async findDisciplines(
+    getDisciplineParam: GetDisciplineParamDto,
+    paginationQueryDto: PaginationQueryDto,
+  ) {
+    if (getDisciplineParam?.id) {
+      return await this.findOneDisciplineByIdProvider.findOneDisciplineById(
+        getDisciplineParam.id,
+      );
+    } else {
+      return await this.findAllDisciplinesProvider.findAllDisciplines(
+        paginationQueryDto,
+      );
+    }
   }
 
   public async createDiscipline(
@@ -74,6 +87,16 @@ export class DisciplinesService {
   public async softDeleteDisciplineById(disciplineId: number) {
     return await this.softDeleteDisciplineByIdProvider.softDeleteDiscipline(
       disciplineId,
+    );
+  }
+
+  public findDisciplinesByUserId(
+    user: ActiveUserData,
+    paginationQueryDto: PaginationQueryDto,
+  ) {
+    return this.findDisciplinesByUserIdProvider.findDisciplinesByUserId(
+      user,
+      paginationQueryDto,
     );
   }
 

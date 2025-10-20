@@ -15,7 +15,7 @@ export class FindAllDisciplinesProvider {
     private readonly paginationProvider: PaginationProvider,
   ) {}
 
-  public async findAllDisiplines(
+  public async findAllDisciplines(
     paginationQueryDto: PaginationQueryDto,
   ): Promise<Paginated<Discipline>> {
     let disciplines: Paginated<Discipline> | undefined;
