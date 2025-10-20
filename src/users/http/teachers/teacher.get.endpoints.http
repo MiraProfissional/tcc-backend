@@ -1,4 +1,4 @@
-GET http://localhost:3000/teachers/8
+GET http://localhost:3000/teachers/18
 ?limit=10
 &page=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsInJvbGUiOiJURUFDSEVSIiwiZW1haWwiOiJHYWJNaXJhQGVtYWlsLmNvbSIsImlhdCI6MTc2MDg4MTcxNSwiZXhwIjoxNzYwOTY4MTE1LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.PlOHnxglstmchXm6nxPkxaV9iTSnO8dx4SoDzGOVoKM
