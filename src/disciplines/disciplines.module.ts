@@ -17,6 +17,7 @@ import { FindOneDisciplineByIdProvider } from './providers/find-one-discipline-b
 import { StopFaceRecognitionProvider } from './providers/stop-face-recognition.provider';
 import { FindDisciplinesByUserIdProvider } from './providers/find-disciplines-by-user-id.provider';
 import { SessionsModule } from 'src/sessions/sessions.module';
+import { RemoveStudentsFromDisciplineProvider } from './providers/remove-students-from-discipline.provider';
 
 @Module({
   controllers: [DisciplinesController],
@@ -31,6 +32,7 @@ import { SessionsModule } from 'src/sessions/sessions.module';
     FindOneDisciplineByIdProvider,
     StopFaceRecognitionProvider,
     FindDisciplinesByUserIdProvider,
+    RemoveStudentsFromDisciplineProvider,
   ],
   imports: [
     UsersModule,

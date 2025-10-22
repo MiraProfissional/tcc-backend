@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   ParseIntPipe,
   Patch,
@@ -18,6 +19,7 @@ import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
 import { RequestFaceRecognitionDto } from './dtos/request-face-recognition-discipline.dto';
 import { GetDisciplineParamDto } from './dtos/get-discipline-param.dto';
+import { RemoveStudentsDto } from './dtos/remove-students-from-discipline.dto';
 
 @Controller('disciplines')
 @ApiTags('Disciplines')
@@ -98,6 +100,7 @@ export class DisciplinesController {
     description:
       'You get a 200 response if the camera opened successfully and start the face recognition',
   })
+  @HttpCode(200)
   @Post('/start-face-recognition')
   public startFaceRecognition(
     @Body() requestFaceRecognition: RequestFaceRecognitionDto,
@@ -115,12 +118,31 @@ export class DisciplinesController {
     description:
       'You get a 200 response if the camera closed successfully and stop the face recognition',
   })
+  @HttpCode(200)
   @Post('/stop-face-recognition')
   public stopFaceRecognition(
     @Body() requestFaceRecognition: RequestFaceRecognitionDto,
   ) {
     return this.disciplinesService.stopFaceRecognition(
       requestFaceRecognition.id,
+    );
+  }
+
+  @ApiOperation({
+    summary: 'Removes students from a discipline',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'You get a 200 response if students are successfully removed from the discipline',
+  })
+  @HttpCode(200)
+  @Post('/remove/student')
+  public removeStudentsFromDiscipline(
+    @Body() removeStudentsDto: RemoveStudentsDto,
+  ) {
+    return this.disciplinesService.removeStudentsFromDiscipline(
+      removeStudentsDto,
     );
   }
 

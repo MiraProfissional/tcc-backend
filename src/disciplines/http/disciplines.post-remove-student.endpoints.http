@@ -1,0 +1,8 @@
+POST http://localhost:3000/disciplines/remove/student
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksInJvbGUiOiJURUFDSEVSIiwiZW1haWwiOiJKdUp1TWlyYUBlbWFpbC5jb20iLCJpYXQiOjE3NjExNzAyNjQsImV4cCI6MTc2MTI1NjY2NCwiYXVkIjoibG9jYWxob3N0OjMwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMCJ9.YvMDn2l4jCF1wDc8MYectFCNFWDW3LQJIA12R_ODqTw
+
+{
+    "id": 12,
+    "studentsIds": [18]
+}

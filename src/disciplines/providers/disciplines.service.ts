@@ -15,6 +15,8 @@ import { StartFaceRecognitionProvider } from './start-face-recognition.provider'
 import { StopFaceRecognitionProvider } from './stop-face-recognition.provider';
 import { FindDisciplinesByUserIdProvider } from './find-disciplines-by-user-id.provider';
 import { GetDisciplineParamDto } from '../dtos/get-discipline-param.dto';
+import { RemoveStudentsFromDisciplineProvider } from './remove-students-from-discipline.provider';
+import { RemoveStudentsDto } from '../dtos/remove-students-from-discipline.dto';
 
 @Injectable()
 export class DisciplinesService {
@@ -36,6 +38,8 @@ export class DisciplinesService {
     private readonly stopFaceRecognitionProvider: StopFaceRecognitionProvider,
 
     private readonly findDisciplinesByUserIdProvider: FindDisciplinesByUserIdProvider,
+
+    private readonly removeStudentsFromDisciplineProvider: RemoveStudentsFromDisciplineProvider,
 
     @Inject(cameraApiConfig.KEY)
     private readonly cameraApiConfiguration: ConfigType<typeof cameraApiConfig>,
@@ -109,6 +113,14 @@ export class DisciplinesService {
   public async stopFaceRecognition(disciplineId: number) {
     return await this.stopFaceRecognitionProvider.stopFaceRecognitionByDisciplineId(
       disciplineId,
+    );
+  }
+
+  public async removeStudentsFromDiscipline(
+    removeStudentsDto: RemoveStudentsDto,
+  ) {
+    return await this.removeStudentsFromDisciplineProvider.removeStudentsFromDiscipline(
+      removeStudentsDto,
     );
   }
 }
