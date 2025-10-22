@@ -45,9 +45,9 @@ export class DisciplinesService {
     getDisciplineParam: GetDisciplineParamDto,
     paginationQueryDto: PaginationQueryDto,
   ) {
-    if (getDisciplineParam?.id) {
+    if (getDisciplineParam?.disciplineId) {
       return await this.findOneDisciplineByIdProvider.findOneDisciplineById(
-        getDisciplineParam.id,
+        getDisciplineParam.disciplineId,
       );
     } else {
       return await this.findAllDisciplinesProvider.findAllDisciplines(

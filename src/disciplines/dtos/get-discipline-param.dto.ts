@@ -8,5 +8,5 @@ export class GetDisciplineParamDto {
   })
   @IsOptional()
   @IsInt()
-  id?: number;
+  disciplineId?: number;
 }
