@@ -2,7 +2,6 @@ import { OmitType, PartialType } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateTeacherDto } from './create-teacher.dto';
-import { Exclude } from 'class-transformer';
 
 export class PatchTeacherDto extends PartialType(
   OmitType(CreateTeacherDto, ['userRole', 'password'] as const),
@@ -14,7 +13,4 @@ export class PatchTeacherDto extends PartialType(
   @IsInt()
   @IsNotEmpty()
   id: number;
-
-  @Exclude()
-  userRole?: any;
 }

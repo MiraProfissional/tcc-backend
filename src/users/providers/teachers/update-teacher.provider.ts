@@ -152,6 +152,15 @@ export class UpdateTeacherProvider {
       teacher.dateBirth = new Date(patchTeacherDto.dateBirth);
     }
 
+    try {
+      await this.teachersRepository.save(teacher);
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
     return teacher;
   }
 }

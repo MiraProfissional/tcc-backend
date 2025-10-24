@@ -153,6 +153,15 @@ export class UpdateStudentProvider {
       student.dateBirth = new Date(patchStudentDto.dateBirth);
     }
 
+    try {
+      await this.studentsRepository.save(student);
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
     return student;
   }
 }
