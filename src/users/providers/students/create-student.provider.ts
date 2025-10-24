@@ -32,6 +32,7 @@ export class CreateStudentProvider {
   public async createStudent(createStudentDto: CreateStudentDto) {
     let existingStudentEmail: Student | null;
     let existingStudentRegistrationNumber: Student | null;
+    let existingStudentCpf: Student | null;
 
     try {
       existingStudentEmail = await this.studentsRepository.findOne({
@@ -46,8 +47,59 @@ export class CreateStudentProvider {
 
     if (existingStudentEmail) {
       throw new BadRequestException(
-        'The user already exists. Please check your email.',
+        'The email is already in use by another student.',
       );
+    }
+
+    let existingTeacherEmail: Teacher | null;
+    try {
+      existingTeacherEmail = await this.teachersService.findOneTeacherByEmail(
+        createStudentDto.email,
+      );
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    if (existingTeacherEmail) {
+      throw new BadRequestException(
+        'The email is already in use by a teacher.',
+      );
+    }
+
+    try {
+      existingStudentCpf = await this.studentsRepository.findOne({
+        where: { cpf: createStudentDto.cpf },
+      });
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    if (existingStudentCpf) {
+      throw new BadRequestException(
+        'The CPF is already in use by another student.',
+      );
+    }
+
+    let existingTeacherCpf: Teacher | null;
+    try {
+      existingTeacherCpf = await this.teachersService.findOneTeacherByCpf(
+        createStudentDto.cpf,
+      );
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    if (existingTeacherCpf) {
+      throw new BadRequestException('The CPF is already in use by a teacher.');
     }
 
     try {
@@ -65,7 +117,7 @@ export class CreateStudentProvider {
 
     if (existingStudentRegistrationNumber) {
       throw new BadRequestException(
-        'The user already exists. Please check your registrationNumber.',
+        'The registration number is already in use by another student.',
       );
     }
 
@@ -76,7 +128,7 @@ export class CreateStudentProvider {
 
     if (existingTeacherRegistrationNumber) {
       throw new BadRequestException(
-        'This registration number is already used by a teacher.',
+        'The registration number is already in use by a teacher.',
       );
     }
 
