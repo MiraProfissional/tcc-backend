@@ -13,7 +13,7 @@ import {
 import { DisciplinesService } from './providers/disciplines.service';
 import { CreateDisciplineDto } from './dtos/create-discipline.dto';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PatchDisciplineDTO } from './dtos/patch-discipline.dto';
+import { PatchDisciplineDto } from './dtos/patch-discipline.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
@@ -155,7 +155,7 @@ export class DisciplinesController {
       'You get a 200 response if your discipline is updated successfully',
   })
   @Patch()
-  public patch(@Body() patchDisciplineDto: PatchDisciplineDTO) {
+  public patch(@Body() patchDisciplineDto: PatchDisciplineDto) {
     return this.disciplinesService.updateDiscipline(patchDisciplineDto);
   }
 

@@ -80,8 +80,7 @@ export class StudentsController {
   })
   @Patch()
   public patchStudent(@Body() patchStudentDto: PatchStudentDto) {
-    console.log(patchStudentDto);
-    return 'You sent a PATCH request';
+    return this.studentsService.updateStudent(patchStudentDto);
   }
 
   @ApiOperation({

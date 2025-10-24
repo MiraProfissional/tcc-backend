@@ -1,0 +1,34 @@
+import { Injectable, RequestTimeoutException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Teacher } from 'src/users/entities/teacher.entity';
+import { Repository } from 'typeorm';
+
+@Injectable()
+export class FindOneTeacherByCpfProvider {
+  constructor(
+    @InjectRepository(Teacher)
+    private readonly teachersRepository: Repository<Teacher>,
+  ) {}
+
+  /**
+   * The method to get one teacher from the database by Cpf
+   */
+  public async findOneTeacherByCpf(
+    teacherCpf: string,
+  ): Promise<Teacher | null> {
+    let teacher: Teacher | null;
+
+    try {
+      teacher = await this.teachersRepository.findOneBy({
+        cpf: teacherCpf,
+      });
+    } catch {
+      throw new RequestTimeoutException(
+        'Unable to process your request at the moment, please try later.',
+        { description: 'Error connecting to the database.' },
+      );
+    }
+
+    return teacher;
+  }
+}

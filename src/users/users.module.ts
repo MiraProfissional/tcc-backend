@@ -28,6 +28,10 @@ import { CreateGoogleTeacherProvider } from './providers/teachers/create-google-
 import { FindAllTeachersProvider } from './providers/teachers/find-all-teachers.provider';
 import { FindAllStudentsProvider } from './providers/students/find-all-students.provider';
 import { PaginationModule } from 'src/common/pagination/pagination.module';
+import { UpdateStudentProvider } from './providers/students/update-student.provider';
+import { UpdateTeacherProvider } from './providers/teachers/update-teacher.provider';
+import { FindOneTeacherByCpfProvider } from './providers/teachers/find-one-teacher-by-cpf.provider';
+import { FindOneStudentByCpfProvider } from './providers/students/find-one-student-by-cpf.provider';
 
 @Module({
   controllers: [TeachersController, StudentsController],
@@ -54,6 +58,10 @@ import { PaginationModule } from 'src/common/pagination/pagination.module';
     CreateGoogleTeacherProvider,
     FindAllTeachersProvider,
     FindAllStudentsProvider,
+    UpdateStudentProvider,
+    UpdateTeacherProvider,
+    FindOneTeacherByCpfProvider,
+    FindOneStudentByCpfProvider,
   ],
   exports: [TeachersService, StudentsService],
   imports: [

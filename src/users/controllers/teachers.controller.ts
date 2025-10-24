@@ -76,8 +76,7 @@ export class TeachersController {
   })
   @Patch()
   public patch(@Body() patchTeacherDto: PatchTeacherDto) {
-    console.log(patchTeacherDto);
-    return 'You sent a PATCH request';
+    return this.teachersService.updateTeacher(patchTeacherDto);
   }
 
   @ApiOperation({

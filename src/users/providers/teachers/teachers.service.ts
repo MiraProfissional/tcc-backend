@@ -13,6 +13,9 @@ import { GoogleTeacher } from 'src/users/interfaces/google-teacher.interface';
 import { GetUserParamDto } from 'src/users/dtos/users/get-users-param.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { FindAllTeachersProvider } from './find-all-teachers.provider';
+import { FindOneTeacherByCpfProvider } from './find-one-teacher-by-cpf.provider';
+import { UpdateTeacherProvider } from './update-teacher.provider';
+import { PatchTeacherDto } from 'src/users/dtos/teachers/patch-teacher.dto';
 
 @Injectable()
 export class TeachersService {
@@ -27,6 +30,8 @@ export class TeachersService {
 
     private readonly findMultipleTeachersByIdProvider: FindMultipleTeachersByIdProvider,
 
+    private readonly findOneTeacherByCpfProvider: FindOneTeacherByCpfProvider,
+
     private readonly findOneTeacherByEmailProvider: FindOneTeacherByEmailProvider,
 
     private readonly findOneTeacherByGoogleIdProvider: FindOneTeacherByGoogleIdProvider,
@@ -36,6 +41,8 @@ export class TeachersService {
     private readonly findOneTeacherByIdProvider: FindOneTeacherByIdProvider,
 
     private readonly softDeleteTeacherByIdProvider: SoftDeleteTeacherByIdProvider,
+
+    private readonly updateTeacherProvider: UpdateTeacherProvider,
   ) {}
 
   public async createGoogleTeacher(googleTeacher: GoogleTeacher) {
@@ -64,6 +71,12 @@ export class TeachersService {
   public async findMultipleTeachersById(teachersIds: number[]) {
     return await this.findMultipleTeachersByIdProvider.findMultipleTeachersById(
       teachersIds,
+    );
+  }
+
+  public async findOneTeacherByCpf(teacherCpf: string) {
+    return await this.findOneTeacherByCpfProvider.findOneTeacherByCpf(
+      teacherCpf,
     );
   }
 
@@ -99,5 +112,9 @@ export class TeachersService {
     return await this.softDeleteTeacherByIdProvider.softDeleteTeacher(
       teacherId,
     );
+  }
+
+  public async updateTeacher(patchTeacherDto: PatchTeacherDto) {
+    return await this.updateTeacherProvider.updateTeacher(patchTeacherDto);
   }
 }

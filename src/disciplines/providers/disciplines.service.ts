@@ -5,7 +5,7 @@ import cameraApiConfig from '../config/faceRecognitionApi.config';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { CreateDisciplineProvider } from './create-discipline.provider';
 import { FindAllDisciplinesProvider } from './find-all-disciplines.provider';
-import { PatchDisciplineDTO } from '../dtos/patch-discipline.dto';
+import { PatchDisciplineDto } from '../dtos/patch-discipline.dto';
 import { UpdateDisciplineProvider } from './update-discipline.provider';
 import { DeleteDisciplineByIdProvider } from './delete-discipline-by-id.provider';
 import { SoftDeleteDisciplineByIdProvider } from './soft-delete-discipline-by-id.provider';
@@ -76,7 +76,7 @@ export class DisciplinesService {
     );
   }
 
-  public async updateDiscipline(patchDisciplineDto: PatchDisciplineDTO) {
+  public async updateDiscipline(patchDisciplineDto: PatchDisciplineDto) {
     return await this.updateDisciplineProvider.updateDiscipline(
       patchDisciplineDto,
     );

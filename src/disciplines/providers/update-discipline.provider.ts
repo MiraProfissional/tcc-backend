@@ -6,7 +6,7 @@ import {
 import { Repository } from 'typeorm';
 import { Discipline } from '../discipline.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PatchDisciplineDTO } from '../dtos/patch-discipline.dto';
+import { PatchDisciplineDto } from '../dtos/patch-discipline.dto';
 import { StudentsService } from 'src/users/providers/students/students.service';
 import { TeachersService } from 'src/users/providers/teachers/teachers.service';
 
@@ -22,7 +22,7 @@ export class UpdateDisciplineProvider {
   ) {}
 
   public async updateDiscipline(
-    patchDisciplineDto: PatchDisciplineDTO,
+    patchDisciplineDto: PatchDisciplineDto,
   ): Promise<Discipline> {
     let discipline: Discipline | null;
 

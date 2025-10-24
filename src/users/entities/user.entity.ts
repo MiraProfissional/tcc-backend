@@ -60,6 +60,7 @@ export abstract class User {
   @Column({
     type: 'varchar',
     nullable: false,
+    unique: true,
   })
   cpf: string;
 

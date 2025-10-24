@@ -1,9 +1,12 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { OmitType, PartialType } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateTeacherDto } from './create-teacher.dto';
+import { Exclude } from 'class-transformer';
 
-export class PatchTeacherDto extends PartialType(CreateTeacherDto) {
+export class PatchTeacherDto extends PartialType(
+  OmitType(CreateTeacherDto, ['userRole', 'password'] as const),
+) {
   @ApiProperty({
     description: "The teacher's ID that needs to be updated",
     example: '1',
@@ -11,4 +14,7 @@ export class PatchTeacherDto extends PartialType(CreateTeacherDto) {
   @IsInt()
   @IsNotEmpty()
   id: number;
+
+  @Exclude()
+  userRole?: any;
 }
