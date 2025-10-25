@@ -2,10 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { fileTypes } from './enums/file-types.enum';
+import { Student } from 'src/users/entities/student.entity';
 
 @Entity()
 export class Upload {
@@ -20,13 +23,6 @@ export class Upload {
   name: string;
 
   @Column({
-    type: 'varchar',
-    length: 1024,
-    nullable: false,
-  })
-  path: string;
-
-  @Column({
     type: 'enum',
     enum: fileTypes,
     default: fileTypes.IMAGE,
@@ -34,19 +30,11 @@ export class Upload {
   })
   type: string;
 
-  @Column({
-    type: 'varchar',
-    length: 128,
-    nullable: false,
+  @OneToOne(() => Student, (student) => student.faceUpload, {
+    onDelete: 'CASCADE',
   })
-  mime: string;
-
-  @Column({
-    type: 'varchar',
-    length: 1024,
-    nullable: false,
-  })
-  size: number;
+  @JoinColumn()
+  student: Student;
 
   @CreateDateColumn()
   createDate: Date;

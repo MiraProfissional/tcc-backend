@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { UploadsController } from './uploads.controller';
 import { UploadsService } from './providers/uploads.service';
 import { UploadUserFaceProvider } from './providers/upload-user-face.provider';
@@ -14,7 +14,7 @@ import { UsersModule } from 'src/users/users.module';
   imports: [
     ConfigModule.forFeature(uploadFaceApiConfig),
     TypeOrmModule.forFeature([Upload]),
-    UsersModule,
+    forwardRef(() => UsersModule),
   ],
 })
 export class UploadsModule {}

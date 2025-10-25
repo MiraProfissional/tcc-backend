@@ -1,6 +1,9 @@
-PATCH http://localhost:3000/users/student/
+PATCH http://localhost:3000/students/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIwLCJyb2xlIjoiU1RVREVOVCIsImVtYWlsIjoiTWF0aGV1c0VzdHVkYW50ZUBlbWFpbC5jb20iLCJpYXQiOjE3NjEzMTIyMDksImV4cCI6MTc2MTM5ODYwOSwiYXVkIjoibG9jYWxob3N0OjMwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMCJ9.cfNu-A2GhyqAhXOCLYw4BOW7f22rWXuogp-pjXdC05U
+
 {
-    "id": 3,
-    "userRole": "STUDENT"
+    "id": 20,
+    "firstName": "Pou",
+    "email": "PouAluno@email.com"
 }

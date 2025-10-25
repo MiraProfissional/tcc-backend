@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, RequestTimeoutException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import * as path from 'path';
 import { v4 as uuid4 } from 'uuid';
@@ -9,15 +9,18 @@ import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import { StudentsService } from 'src/users/providers/students/students.service';
-import { TeachersService } from 'src/users/providers/teachers/teachers.service';
-import { UserRole } from 'src/users/enums/user-role.enum';
+import { Repository } from 'typeorm';
+import { Upload } from '../upload.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { fileTypes } from '../enums/file-types.enum';
 
 @Injectable()
 export class UploadUserFaceProvider {
   constructor(
     private readonly studenstService: StudentsService,
 
-    private readonly teachersService: TeachersService,
+    @InjectRepository(Upload)
+    private readonly uploadRepository: Repository<Upload>,
 
     @Inject(uploadFaceApiConfig.KEY)
     private readonly uploadFaceApiConfiguration: ConfigType<
@@ -29,13 +32,9 @@ export class UploadUserFaceProvider {
     file: Express.Multer.File,
     user: ActiveUserData,
   ) {
-    let activeUser: Student | Teacher;
-
-    if (user.role == UserRole.STUDENT) {
-      activeUser = await this.studenstService.findOneStudentById(user.sub);
-    } else {
-      activeUser = await this.teachersService.findOneTeacherById(user.sub);
-    }
+    const activeUser: Student = await this.studenstService.findOneStudentById(
+      user.sub,
+    );
 
     const newFileName = this.generateFileName(file, activeUser);
 
@@ -51,17 +50,32 @@ export class UploadUserFaceProvider {
     });
 
     try {
-      const response = await axios.post(apiLink, formData, {
+      await axios.post(apiLink, formData, {
         headers: {
           ...formData.getHeaders(),
         },
       });
-
-      return response.data.fileUrl || newFileName;
-    } catch (error) {
-      console.error('Error uploading file to Face API:', error);
-      throw new Error('Failed to send image to face recognition backend');
+    } catch {
+      throw new RequestTimeoutException(
+        'Failed to send image to face recognition backend',
+      );
     }
+
+    const upload = this.uploadRepository.create({
+      name: newFileName,
+      type: fileTypes.IMAGE,
+      student: activeUser,
+    });
+
+    try {
+      await this.uploadRepository.save(upload);
+    } catch {
+      throw new RequestTimeoutException(
+        'Failed to save upload record to the database',
+      );
+    }
+
+    return upload;
   }
 
   private generateFileName(
