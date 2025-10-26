@@ -18,6 +18,7 @@ import { AuthenticationGuard } from './auth/guards/authentication/authentication
 import { DataResponseInterceptor } from './common/interceptors/data-response/data-response.interceptor';
 import { UploadsModule } from './uploads/uploads.module';
 import { SessionsModule } from './sessions/sessions.module';
+import { MailModule } from './mail/mail.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -53,6 +54,7 @@ const ENV = process.env.NODE_ENV;
     JwtModule.registerAsync(jwtConfig.asProvider()),
     UploadsModule,
     SessionsModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [

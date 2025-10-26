@@ -12,6 +12,7 @@ import axios from 'axios';
 import { SessionsService } from 'src/sessions/providers/sessions.service';
 import { CreateSessionInterface } from 'src/sessions/interfaces/create-session.interface';
 import { StopFaceRecognitionInterface } from '../interface/stop-face-recognition.interface';
+import { MailService } from 'src/mail/providers/mail.service';
 
 @Injectable()
 export class StopFaceRecognitionProvider {
@@ -25,6 +26,8 @@ export class StopFaceRecognitionProvider {
     >,
 
     private readonly sessionsService: SessionsService,
+
+    private readonly mailService: MailService,
   ) {}
 
   public async stopFaceRecognitionByDisciplineId(disciplineId: number) {
@@ -67,7 +70,33 @@ export class StopFaceRecognitionProvider {
         ),
       };
 
-      return this.sessionsService.createSession(newSession);
+      const createdSession =
+        await this.sessionsService.createSession(newSession);
+
+      // Enviar email de confirmação de presença para cada aluno presente
+      const sessionDate = new Date(data.start_time).toLocaleDateString('pt-BR');
+      const sessionTime = new Date(data.start_time).toLocaleTimeString(
+        'pt-BR',
+        {
+          hour: '2-digit',
+          minute: '2-digit',
+        },
+      );
+
+      for (const student of newSession.presentStudents) {
+        await this.mailService.sendAttendanceConfirmation(student.email, {
+          studentName: `${student.firstName} ${student.lastName}`,
+          disciplineName: discipline.name,
+          teacherName: `${discipline.teacher.firstName} ${discipline.teacher.lastName}`,
+          sessionDate,
+          sessionTime,
+          location: `${discipline.disciplineRoom}`,
+          dashboardUrl:
+            process.env.FRONTEND_URL || 'http://localhost:5173/home',
+        });
+      }
+
+      return createdSession;
     } catch {
       throw new RequestTimeoutException(
         'Unable to process your request at the moment, please try later.',

@@ -12,12 +12,15 @@ import { Teacher } from 'src/users/entities/teacher.entity';
 import { Repository } from 'typeorm';
 import { TeachersService } from '../teachers/teachers.service';
 import { HashingProvider } from 'src/auth/providers/hashing.provider';
+import { MailService } from 'src/mail/providers/mail.service';
 
 @Injectable()
 export class CreateStudentProvider {
   constructor(
     @Inject(forwardRef(() => HashingProvider))
     private readonly hashingProvider: HashingProvider,
+
+    private readonly mailService: MailService,
 
     @InjectRepository(Student)
     private readonly studentsRepository: Repository<Student>,
@@ -148,6 +151,12 @@ export class CreateStudentProvider {
         'Unable to process your request at the moment, please try later.',
         { description: 'Error connecting to the database.' },
       );
+    }
+
+    try {
+      await this.mailService.sendWelcomeEmail(newStudent);
+    } catch (error) {
+      throw new RequestTimeoutException(error);
     }
 
     return newStudent;

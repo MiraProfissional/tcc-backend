@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .header {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: #ffffff;
+        padding: 30px;
+        text-align: center;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 28px;
+      }
+      .content {
+        padding: 40px 30px;
+        color: #333333;
+        line-height: 1.6;
+      }
+      .content p {
+        margin: 16px 0;
+      }
+      .attendance-box {
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        border-left: 4px solid #10b981;
+        padding: 25px;
+        margin: 25px 0;
+        border-radius: 4px;
+        text-align: center;
+      }
+      .attendance-box .icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+      .attendance-box h2 {
+        margin: 10px 0;
+        color: #059669;
+        font-size: 24px;
+      }
+      .details {
+        background-color: #f9f9f9;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+      .details ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .details li {
+        padding: 10px 0;
+        border-bottom: 1px solid #e5e5e5;
+        font-size: 14px;
+      }
+      .details li:last-child {
+        border-bottom: none;
+      }
+      .details strong {
+        color: #10b981;
+        display: inline-block;
+        width: 140px;
+      }
+      .button {
+        display: inline-block;
+        background-color: #10b981;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 12px 30px;
+        border-radius: 4px;
+        margin: 20px 0;
+        font-weight: bold;
+      }
+      .footer {
+        background-color: #f9f9f9;
+        padding: 20px;
+        text-align: center;
+        color: #666666;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>✅ Attendance Confirmed!</h1>
+      </div>
+      <div class="content">
+        <p>Dear <strong><%= studentName %></strong>,</p>
+
+        <div class="attendance-box">
+          <div class="icon">✓</div>
+          <h2>Your presence has been registered!</h2>
+          <p style="margin: 5px 0; color: #059669">
+            Your attendance was successfully recorded via facial recognition.
+          </p>
+        </div>
+
+        <div class="details">
+          <p><strong>Session Details:</strong></p>
+          <ul>
+            <li><strong>📚 Discipline:</strong> <%= disciplineName %></li>
+            <li><strong>👨‍🏫 Teacher:</strong> <%= teacherName %></li>
+            <li><strong>📅 Date:</strong> <%= sessionDate %></li>
+            <li><strong>⏰ Time:</strong> <%= sessionTime %></li>
+            <li>
+              <strong>📍 Location:</strong> <%= location || 'Classroom' %>
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          This is an automated confirmation of your attendance. If you believe
+          this is an error, please contact your teacher or the administration.
+        </p>
+
+        <center>
+          <a href="<%= dashboardUrl %>" class="button"
+            >View Your Attendance History</a
+          >
+        </center>
+
+        <p>Best regards,<br /><strong>Face Recognition App Team</strong></p>
+      </div>
+      <div class="footer">
+        <p>© 2025 Face Recognition App. All rights reserved.</p>
+        <p>This is an automated message, please do not reply to this email.</p>
+      </div>
+    </div>
+  </body>
+</html>

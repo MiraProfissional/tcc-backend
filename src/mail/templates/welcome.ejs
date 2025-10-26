@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #ffffff;
+        padding: 30px;
+        text-align: center;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 28px;
+      }
+      .content {
+        padding: 40px 30px;
+        color: #333333;
+        line-height: 1.6;
+      }
+      .content p {
+        margin: 16px 0;
+      }
+      .account-details {
+        background-color: #f9f9f9;
+        border-left: 4px solid #667eea;
+        padding: 20px;
+        margin: 20px 0;
+      }
+      .account-details ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .account-details li {
+        padding: 8px 0;
+        font-size: 14px;
+      }
+      .account-details strong {
+        color: #667eea;
+      }
+      .button {
+        display: inline-block;
+        background-color: #667eea;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 12px 30px;
+        border-radius: 4px;
+        margin: 20px 0;
+        font-weight: bold;
+      }
+      .footer {
+        background-color: #f9f9f9;
+        padding: 20px;
+        text-align: center;
+        color: #666666;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Welcome to Face Recognition App! 🎉</h1>
+      </div>
+      <div class="content">
+        <p>Dear <strong><%= name %></strong>,</p>
+        <p>
+          Thanks for signing up for Face Recognition System. We're very excited to
+          have you on board!
+        </p>
+
+        <div class="account-details">
+          <p><strong>Here are your account details:</strong></p>
+          <ul>
+            <li>📧 <strong>Email:</strong> <%= email %></li>
+            <li>🔗 <strong>Login URL:</strong> <%= loginUrl %></li>
+          </ul>
+        </div>
+
+        <p>
+          You can now access your account and start using our face recognition
+          system for attendance tracking.
+        </p>
+
+        <center>
+          <a href="<%= loginUrl %>" class="button">Access Your Account</a>
+        </center>
+
+        <p>If you have any questions, feel free to reach out to our support team.</p>
+
+        <p>Best regards,<br /><strong>Face Recognition App Team</strong></p>
+      </div>
+      <div class="footer">
+        <p>© 2025 Face Recognition App. All rights reserved.</p>
+        <p>This is an automated message, please do not reply to this email.</p>
+      </div>
+    </div>
+  </body>
+</html>
