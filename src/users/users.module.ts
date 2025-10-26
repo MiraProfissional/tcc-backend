@@ -32,7 +32,6 @@ import { UpdateStudentProvider } from './providers/students/update-student.provi
 import { UpdateTeacherProvider } from './providers/teachers/update-teacher.provider';
 import { FindOneTeacherByCpfProvider } from './providers/teachers/find-one-teacher-by-cpf.provider';
 import { FindOneStudentByCpfProvider } from './providers/students/find-one-student-by-cpf.provider';
-import { UploadsModule } from 'src/uploads/uploads.module';
 
 @Module({
   controllers: [TeachersController, StudentsController],
@@ -64,10 +63,9 @@ import { UploadsModule } from 'src/uploads/uploads.module';
     FindOneTeacherByCpfProvider,
     FindOneStudentByCpfProvider,
   ],
-  exports: [TeachersService, StudentsService],
+  exports: [TeachersService, StudentsService, FindOneStudentByIdProvider],
   imports: [
     forwardRef(() => AuthModule),
-    forwardRef(() => UploadsModule),
     TypeOrmModule.forFeature([Student, Teacher]),
     PaginationModule,
   ],

@@ -2,7 +2,7 @@ POST http://localhost:3000/auth/sign-in
 Content-Type: application/json
 
 {
-    "email":"TestFrontEndAluno@email.com",
+    "email":"TestFrontend@email.com",
     "password":"AlunoSenha@1"
 }
 
@@ -10,6 +10,6 @@ POST http://localhost:3000/auth/sign-in
 Content-Type: application/json
 
 {
-    "email":"JuJuMira@email.com",
+    "email":"GustavoProfessor@email.com",
     "password":"Professor@1"
 }

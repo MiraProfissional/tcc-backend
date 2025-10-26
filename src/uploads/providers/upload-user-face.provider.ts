@@ -1,4 +1,9 @@
-import { Inject, Injectable, RequestTimeoutException } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import * as path from 'path';
 import { v4 as uuid4 } from 'uuid';
@@ -8,7 +13,7 @@ import uploadFaceApiConfig from '../config/uploadFaceApi.config';
 import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
-import { StudentsService } from 'src/users/providers/students/students.service';
+import { FindOneStudentByIdProvider } from 'src/users/providers/students/find-one-student-by-id.provider';
 import { Repository } from 'typeorm';
 import { Upload } from '../upload.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,7 +22,8 @@ import { fileTypes } from '../enums/file-types.enum';
 @Injectable()
 export class UploadUserFaceProvider {
   constructor(
-    private readonly studenstService: StudentsService,
+    @Inject(forwardRef(() => FindOneStudentByIdProvider))
+    private readonly findOneStudentByIdProvider: FindOneStudentByIdProvider,
 
     @InjectRepository(Upload)
     private readonly uploadRepository: Repository<Upload>,
@@ -32,9 +38,8 @@ export class UploadUserFaceProvider {
     file: Express.Multer.File,
     user: ActiveUserData,
   ) {
-    const activeUser: Student = await this.studenstService.findOneStudentById(
-      user.sub,
-    );
+    const activeUser: Student =
+      await this.findOneStudentByIdProvider.findOneStudentById(user.sub);
 
     const newFileName = this.generateFileName(file, activeUser);
 
