@@ -7,14 +7,14 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
 import faceRecognitionApiLink from '../config/faceRecognitionApi.config';
 import { DisciplinesService } from './disciplines.service';
 import { Discipline } from '../discipline.entity';
 import axios, { AxiosError } from 'axios';
 import { SessionsService } from 'src/sessions/providers/sessions.service';
 import { CreateSessionInterface } from 'src/sessions/interfaces/create-session.interface';
-import { StopFaceRecognitionInterface } from '../interface/stop-face-recognition.interface';
+import { StopFaceRecognitionInterface } from '../interfaces/stop-face-recognition.interface';
 import { MailService } from 'src/mail/providers/mail.service';
 import { Session } from 'src/sessions/session.entity';
 
@@ -23,6 +23,8 @@ export class StopFaceRecognitionProvider {
   private readonly logger = new Logger(StopFaceRecognitionProvider.name);
 
   constructor(
+    private readonly configService: ConfigService,
+
     @Inject(forwardRef(() => DisciplinesService))
     private readonly disciplinesService: DisciplinesService,
 
@@ -176,7 +178,8 @@ export class StopFaceRecognitionProvider {
           sessionTime,
           location: `${discipline.disciplineRoom}`,
           dashboardUrl:
-            process.env.FRONTEND_URL || 'http://localhost:5173/home',
+            this.configService.get<string>('appConfig.frontendUrl') ||
+            'http://localhost:5173',
         });
       } catch {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

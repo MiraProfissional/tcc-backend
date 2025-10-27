@@ -4,7 +4,7 @@ import faceRecognitionApiLink from '../config/faceRecognitionApi.config';
 import { DisciplinesService } from './disciplines.service';
 import { Discipline } from '../discipline.entity';
 import axios from 'axios';
-import { StartFaceRecognitionInterface } from '../interface/start-face-recognition.interface';
+import { StartFaceRecognitionInterface } from '../interfaces/start-face-recognition.interface';
 
 @Injectable()
 export class StartFaceRecognitionProvider {

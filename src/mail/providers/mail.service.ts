@@ -2,16 +2,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
-
-export interface AttendanceConfirmationContext {
-  studentName: string;
-  disciplineName: string;
-  teacherName: string;
-  sessionDate: string;
-  sessionTime: string;
-  location: string;
-  dashboardUrl: string;
-}
+import { AttendanceConfirmationContext } from '../interfaces/attendence-confirmation-context.interface';
 
 @Injectable()
 export class MailService {

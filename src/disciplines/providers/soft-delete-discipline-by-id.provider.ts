@@ -6,7 +6,7 @@ import {
 import { Discipline } from '../discipline.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { DisciplineDeleted } from '../interface/discipline-deleted.interface';
+import { DisciplineDeleted } from '../interfaces/discipline-deleted.interface';
 
 @Injectable()
 export class SoftDeleteDisciplineByIdProvider {

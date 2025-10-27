@@ -6,4 +6,5 @@ export default registerAs('appConfig', () => ({
   mailHost: process.env.MAIL_HOST,
   mailUsername: process.env.MAIL_USERNAME,
   mailPassword: process.env.MAIL_PASSWORD,
+  frontendUrl: process.env.FRONTEND_URL,
 }));

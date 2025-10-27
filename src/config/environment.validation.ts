@@ -23,4 +23,5 @@ export default Joi.object({
   MAIL_HOST: Joi.string().required(),
   MAIL_USERNAME: Joi.string().required(),
   MAIL_PASSWORD: Joi.string().required(),
+  FRONTEND_URL: Joi.string().uri().required(),
 });
