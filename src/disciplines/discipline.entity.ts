@@ -70,9 +70,7 @@ export class Discipline {
   @JoinTable()
   students?: Student[];
 
-  @OneToMany(() => Session, (session) => session.discipline, {
-    eager: true,
-  })
+  @OneToMany(() => Session, (session) => session.discipline)
   sessions?: Session[];
 
   @CreateDateColumn()
