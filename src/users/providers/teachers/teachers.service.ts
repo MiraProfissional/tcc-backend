@@ -16,6 +16,7 @@ import { FindAllTeachersProvider } from './find-all-teachers.provider';
 import { FindOneTeacherByCpfProvider } from './find-one-teacher-by-cpf.provider';
 import { UpdateTeacherProvider } from './update-teacher.provider';
 import { PatchTeacherDto } from 'src/users/dtos/teachers/patch-teacher.dto';
+import { ChangeTeacherPasswordProvider } from './change-teacher-password.provider';
 
 @Injectable()
 export class TeachersService {
@@ -43,6 +44,8 @@ export class TeachersService {
     private readonly softDeleteTeacherByIdProvider: SoftDeleteTeacherByIdProvider,
 
     private readonly updateTeacherProvider: UpdateTeacherProvider,
+
+    private readonly changeTeacherPasswordProvider: ChangeTeacherPasswordProvider,
   ) {}
 
   public async createGoogleTeacher(googleTeacher: GoogleTeacher) {
@@ -116,5 +119,17 @@ export class TeachersService {
 
   public async updateTeacher(patchTeacherDto: PatchTeacherDto) {
     return await this.updateTeacherProvider.updateTeacher(patchTeacherDto);
+  }
+
+  public async changePassword(
+    teacherId: number,
+    currentPassword: string,
+    newPassword: string,
+  ) {
+    return await this.changeTeacherPasswordProvider.changePassword(
+      teacherId,
+      currentPassword,
+      newPassword,
+    );
   }
 }

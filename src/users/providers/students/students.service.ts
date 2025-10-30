@@ -16,6 +16,7 @@ import { FindAllStudentsProvider } from './find-all-students.provider';
 import { FindOneStudentByCpfProvider } from './find-one-student-by-cpf.provider';
 import { UpdateStudentProvider } from './update-student.provider';
 import { PatchStudentDto } from 'src/users/dtos/students/patch-student.dto';
+import { ChangeStudentPasswordProvider } from './change-student-password.provider';
 
 @Injectable()
 export class StudentsService {
@@ -43,6 +44,8 @@ export class StudentsService {
     private readonly findOneStudentByCpfProvider: FindOneStudentByCpfProvider,
 
     private readonly updateStudentProvider: UpdateStudentProvider,
+
+    private readonly changeStudentPasswordProvider: ChangeStudentPasswordProvider,
   ) {}
 
   public async createGoogleStudent(googleStudent: GoogleStudent) {
@@ -116,5 +119,17 @@ export class StudentsService {
 
   public async updateStudent(patchStudentDto: PatchStudentDto) {
     return await this.updateStudentProvider.updateStudent(patchStudentDto);
+  }
+
+  public async changePassword(
+    studentId: number,
+    currentPassword: string,
+    newPassword: string,
+  ) {
+    return await this.changeStudentPasswordProvider.changePassword(
+      studentId,
+      currentPassword,
+      newPassword,
+    );
   }
 }

@@ -19,6 +19,9 @@ import { Auth } from 'src/auth/decorators/auth.decorator';
 import { AuthType } from 'src/auth/enums/auth-type.enum';
 import { PatchStudentDto } from '../dtos/students/patch-student.dto';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { ChangePasswordDto } from '../dtos/change-password.dto';
+import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
+import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
 
 @Controller('students')
 @ApiTags('Students')
@@ -105,5 +108,28 @@ export class StudentsController {
   @Delete('/soft-delete')
   public softDeleteStudent(@Query('id', ParseIntPipe) id: number) {
     return this.studentsService.softDeleteStudentById(id);
+  }
+
+  @ApiOperation({
+    summary: 'Changes the password of the authenticated student',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Password changed successfully',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Current password is incorrect',
+  })
+  @Patch('/me/password')
+  public changePassword(
+    @ActiveUser() user: ActiveUserData,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ) {
+    return this.studentsService.changePassword(
+      user.sub,
+      changePasswordDto.currentPassword,
+      changePasswordDto.newPassword,
+    );
   }
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Student } from 'src/users/entities/student.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import { AttendanceConfirmationContext } from '../interfaces/attendence-confirmation-context.interface';
+import { PasswordResetContext } from '../interfaces/password-reset-context.interface';
 
 @Injectable()
 export class MailService {
@@ -31,6 +32,19 @@ export class MailService {
       from: 'Face Recognition System <no-reply@face-recognition-system.com>',
       subject: 'Attendance Confirmation - Your Presence Was Recorded',
       template: './attendance-confirmation',
+      context,
+    });
+  }
+
+  public async sendPasswordResetEmail(
+    email: string,
+    context: PasswordResetContext,
+  ): Promise<void> {
+    await this.mailerService.sendMail({
+      to: email,
+      from: 'Face Recognition System <no-reply@face-recognition-system.com>',
+      subject: 'Password Reset Request',
+      template: './password-reset',
       context,
     });
   }

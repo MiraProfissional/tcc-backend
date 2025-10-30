@@ -3,6 +3,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Student } from './entities/student.entity';
 import { Teacher } from './entities/teacher.entity';
+import { PasswordResetToken } from './entities/password-reset-token.entity';
 import { CreateStudentProvider } from './providers/students/create-student.provider';
 import { CreateTeacherProvider } from './providers/teachers/create-teacher.provider';
 import { FindOneTeacherByIdProvider } from './providers/teachers/find-one-teacher-by-id.provider';
@@ -11,6 +12,7 @@ import { StudentsService } from './providers/students/students.service';
 import { TeachersService } from './providers/teachers/teachers.service';
 import { TeachersController } from './controllers/teachers.controller';
 import { StudentsController } from './controllers/students.controller';
+import { PasswordController } from './controllers/password.controller';
 import { FindOneTeacherByRegistrationNumberProvider } from './providers/teachers/find-one-teacher-by-registration-number.provider';
 import { FindOneStudentByRegistrationNumberProvider } from './providers/students/find-one-student-by-registration-number.provider';
 import { DeleteTeacherByIdProvider } from './providers/teachers/delete-teacher-by-id.provider';
@@ -32,9 +34,15 @@ import { UpdateStudentProvider } from './providers/students/update-student.provi
 import { UpdateTeacherProvider } from './providers/teachers/update-teacher.provider';
 import { FindOneTeacherByCpfProvider } from './providers/teachers/find-one-teacher-by-cpf.provider';
 import { FindOneStudentByCpfProvider } from './providers/students/find-one-student-by-cpf.provider';
+import { ForgotPasswordProvider } from './providers/forgot-password.provider';
+import { ValidateResetTokenProvider } from './providers/validate-reset-token.provider';
+import { ResetPasswordProvider } from './providers/reset-password.provider';
+import { MailModule } from 'src/mail/mail.module';
+import { ChangeStudentPasswordProvider } from './providers/students/change-student-password.provider';
+import { ChangeTeacherPasswordProvider } from './providers/teachers/change-teacher-password.provider';
 
 @Module({
-  controllers: [TeachersController, StudentsController],
+  controllers: [TeachersController, StudentsController, PasswordController],
   providers: [
     TeachersService,
     StudentsService,
@@ -62,12 +70,18 @@ import { FindOneStudentByCpfProvider } from './providers/students/find-one-stude
     UpdateTeacherProvider,
     FindOneTeacherByCpfProvider,
     FindOneStudentByCpfProvider,
+    ForgotPasswordProvider,
+    ValidateResetTokenProvider,
+    ResetPasswordProvider,
+    ChangeStudentPasswordProvider,
+    ChangeTeacherPasswordProvider,
   ],
   exports: [TeachersService, StudentsService, FindOneStudentByIdProvider],
   imports: [
     forwardRef(() => AuthModule),
-    TypeOrmModule.forFeature([Student, Teacher]),
+    TypeOrmModule.forFeature([Student, Teacher, PasswordResetToken]),
     PaginationModule,
+    MailModule,
   ],
 })
 export class UsersModule {}
