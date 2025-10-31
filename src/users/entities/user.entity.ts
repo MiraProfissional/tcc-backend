@@ -71,7 +71,7 @@ export abstract class User {
   cellphone: string;
 
   @Column({
-    type: 'int',
+    type: 'bigint',
     nullable: false,
     unique: true,
   })
