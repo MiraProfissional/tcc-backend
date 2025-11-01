@@ -73,8 +73,9 @@ export class StopFaceRecognitionProvider {
 
     let data: StopFaceRecognitionInterface;
     try {
+      const url = `${apiLink}/${discipline.id}`;
       const response = await axios.post<StopFaceRecognitionInterface>(
-        `${apiLink}/${discipline.id}`,
+        url,
         {},
         {
           headers: { 'Content-Type': 'application/json' },
@@ -109,10 +110,26 @@ export class StopFaceRecognitionProvider {
       );
     }
 
-    const recognizedFaces = (data.recognized_faces ?? []).map(
-      (registrationNumber: string | number) =>
-        Number(String(registrationNumber).trim()),
+    const facesList: (string | number)[] =
+      (data.faces_recognized as (string | number)[]) ||
+      (data.recognized_faces as (string | number)[]) ||
+      [];
+
+    const recognizedFaceStrings = new Set(
+      facesList.map((registrationNumber) => String(registrationNumber).trim()),
     );
+
+    this.logger.log(
+      `Recognized faces received: raw=${JSON.stringify(facesList)}, unique=${recognizedFaceStrings.size}`,
+    );
+
+    const presentStudents = (discipline.students ?? []).filter((student) => {
+      return recognizedFaceStrings.has(String(student.registrationNumber));
+    });
+
+    const absentStudents = (discipline.students ?? []).filter((student) => {
+      return !recognizedFaceStrings.has(String(student.registrationNumber));
+    });
 
     const newSession: CreateSessionInterface = {
       day: data.start_time.toString().split('T')[0],
@@ -121,12 +138,8 @@ export class StopFaceRecognitionProvider {
       cameraIndex: discipline.ipCamera,
       discipline: discipline,
       openedBy: discipline.teacher,
-      presentStudents: (discipline.students ?? []).filter((student) =>
-        recognizedFaces.includes(student.registrationNumber),
-      ),
-      absentStudents: (discipline.students ?? []).filter(
-        (student) => !recognizedFaces.includes(student.registrationNumber),
-      ),
+      presentStudents,
+      absentStudents,
     };
 
     if (newSession.startedAt >= newSession.endedAt) {
