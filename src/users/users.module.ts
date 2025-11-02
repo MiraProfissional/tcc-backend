@@ -5,6 +5,7 @@ import { Student } from './entities/student.entity';
 import { Teacher } from './entities/teacher.entity';
 import { PasswordResetToken } from './entities/password-reset-token.entity';
 import { CreateStudentProvider } from './providers/students/create-student.provider';
+import { CreateStudentWithFaceProvider } from './providers/students/create-student-with-face.provider';
 import { CreateTeacherProvider } from './providers/teachers/create-teacher.provider';
 import { FindOneTeacherByIdProvider } from './providers/teachers/find-one-teacher-by-id.provider';
 import { FindOneStudentByIdProvider } from './providers/students/find-one-student-by-id.provider';
@@ -40,6 +41,9 @@ import { ResetPasswordProvider } from './providers/reset-password.provider';
 import { MailModule } from 'src/mail/mail.module';
 import { ChangeStudentPasswordProvider } from './providers/students/change-student-password.provider';
 import { ChangeTeacherPasswordProvider } from './providers/teachers/change-teacher-password.provider';
+import { Upload } from 'src/uploads/upload.entity';
+import uploadFaceApiConfig from 'src/uploads/config/uploadFaceApi.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   controllers: [TeachersController, StudentsController, PasswordController],
@@ -47,6 +51,7 @@ import { ChangeTeacherPasswordProvider } from './providers/teachers/change-teach
     TeachersService,
     StudentsService,
     CreateStudentProvider,
+    CreateStudentWithFaceProvider,
     CreateTeacherProvider,
     FindOneTeacherByIdProvider,
     FindOneStudentByIdProvider,
@@ -79,7 +84,8 @@ import { ChangeTeacherPasswordProvider } from './providers/teachers/change-teach
   exports: [TeachersService, StudentsService, FindOneStudentByIdProvider],
   imports: [
     forwardRef(() => AuthModule),
-    TypeOrmModule.forFeature([Student, Teacher, PasswordResetToken]),
+    TypeOrmModule.forFeature([Student, Teacher, PasswordResetToken, Upload]),
+    ConfigModule.forFeature(uploadFaceApiConfig),
     PaginationModule,
     MailModule,
   ],

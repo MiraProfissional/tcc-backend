@@ -17,6 +17,7 @@ import { FindOneStudentByCpfProvider } from './find-one-student-by-cpf.provider'
 import { UpdateStudentProvider } from './update-student.provider';
 import { PatchStudentDto } from 'src/users/dtos/students/patch-student.dto';
 import { ChangeStudentPasswordProvider } from './change-student-password.provider';
+import { CreateStudentWithFaceProvider } from './create-student-with-face.provider';
 
 @Injectable()
 export class StudentsService {
@@ -24,6 +25,8 @@ export class StudentsService {
     private readonly createGoogleStudentProvider: CreateGoogleStudentProvider,
 
     private readonly createStudentProvider: CreateStudentProvider,
+
+    private readonly createStudentWithFaceProvider: CreateStudentWithFaceProvider,
 
     private readonly deleteStudentByIdProvider: DeleteStudentByIdProvider,
 
@@ -56,6 +59,16 @@ export class StudentsService {
 
   public async createStudent(createStudentDto: CreateStudentDto) {
     return this.createStudentProvider.createStudent(createStudentDto);
+  }
+
+  public async createStudentWithFace(
+    createStudentDto: CreateStudentDto,
+    faceImage: Express.Multer.File,
+  ) {
+    return this.createStudentWithFaceProvider.createStudentWithFace(
+      createStudentDto,
+      faceImage,
+    );
   }
 
   public findStudents(

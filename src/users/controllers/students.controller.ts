@@ -9,9 +9,17 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  ApiConsumes,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { StudentsService } from '../providers/students/students.service';
 import { GetUserParamDto } from '../dtos/users/get-users-param.dto';
 import { CreateStudentDto } from '../dtos/students/create-student.dto';
@@ -22,6 +30,7 @@ import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.
 import { ChangePasswordDto } from '../dtos/change-password.dto';
 import { ActiveUser } from 'src/auth/decorators/active-user-data.decorator';
 import { ActiveUserData } from 'src/auth/interfaces/active-user.interface';
+import { Student } from '../entities/student.entity';
 
 @Controller('students')
 @ApiTags('Students')
@@ -72,6 +81,38 @@ export class StudentsController {
   @UseInterceptors(ClassSerializerInterceptor)
   public postStudent(@Body() createStudentDto: CreateStudentDto) {
     return this.studentsService.createStudent(createStudentDto);
+  }
+
+  @ApiOperation({
+    summary:
+      'Creates a student with face image upload (transactional - student only created if face upload succeeds)',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiResponse({
+    status: 201,
+    description:
+      'Student created successfully with face image uploaded to face recognition system',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Validation error or face image missing',
+  })
+  @ApiResponse({
+    status: 408,
+    description:
+      'Face upload to Python backend failed - student creation rolled back',
+  })
+  @Post('with-face')
+  @Auth(AuthType.None)
+  @UseInterceptors(ClassSerializerInterceptor, FileInterceptor('faceImage'))
+  public async postStudentWithFace(
+    @Body() createStudentDto: CreateStudentDto,
+    @UploadedFile() faceImage: Express.Multer.File,
+  ): Promise<Student> {
+    return await this.studentsService.createStudentWithFace(
+      createStudentDto,
+      faceImage,
+    );
   }
 
   @ApiOperation({
