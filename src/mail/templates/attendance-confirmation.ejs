@@ -99,48 +99,48 @@
   <body>
     <div class="container">
       <div class="header">
-        <h1>✅ Attendance Confirmed!</h1>
+        <h1>✅ Presença Confirmada!</h1>
       </div>
       <div class="content">
-        <p>Dear <strong><%= studentName %></strong>,</p>
+        <p>Prezado(a) <strong><%= studentName %></strong>,</p>
 
         <div class="attendance-box">
           <div class="icon">✓</div>
-          <h2>Your presence has been registered!</h2>
+          <h2>Sua presença foi registrada!</h2>
           <p style="margin: 5px 0; color: #059669">
-            Your attendance was successfully recorded via facial recognition.
+            Sua presença foi registrada com sucesso via reconhecimento facial.
           </p>
         </div>
 
         <div class="details">
-          <p><strong>Session Details:</strong></p>
+          <p><strong>Detalhes da Sessão:</strong></p>
           <ul>
-            <li><strong>📚 Discipline:</strong> <%= disciplineName %></li>
-            <li><strong>👨‍🏫 Teacher:</strong> <%= teacherName %></li>
-            <li><strong>📅 Date:</strong> <%= sessionDate %></li>
-            <li><strong>⏰ Time:</strong> <%= sessionTime %></li>
+            <li><strong>📚 Disciplina:</strong> <%= disciplineName %></li>
+            <li><strong>👨‍🏫 Professor(a):</strong> <%= teacherName %></li>
+            <li><strong>📅 Data:</strong> <%= sessionDate %></li>
+            <li><strong>⏰ Horário:</strong> <%= sessionTime %></li>
             <li>
-              <strong>📍 Location:</strong> <%= location || 'Classroom' %>
+              <strong>📍 Local:</strong> <%= location || 'Sala de Aula' %>
             </li>
           </ul>
         </div>
 
         <p>
-          This is an automated confirmation of your attendance. If you believe
-          this is an error, please contact your teacher or the administration.
+          Esta é uma confirmação automática da sua presença. Se você acredita
+          que isso é um erro, por favor entre em contato com seu(sua) professor(a) ou a administração.
         </p>
 
         <center>
           <a href="<%= dashboardUrl %>" class="button"
-            >View Your Attendance History</a
+            >Ver Seu Histórico de Presença</a
           >
         </center>
 
-        <p>Best regards,<br /><strong>Face Recognition App Team</strong></p>
+        <p>Atenciosamente,<br /><strong>Equipe do App de Reconhecimento Facial</strong></p>
       </div>
       <div class="footer">
-        <p>© 2025 Face Recognition App. All rights reserved.</p>
-        <p>This is an automated message, please do not reply to this email.</p>
+        <p>© 2025 App de Reconhecimento Facial. Todos os direitos reservados.</p>
+        <p>Esta é uma mensagem automática, por favor não responda a este email.</p>
       </div>
     </div>
   </body>
