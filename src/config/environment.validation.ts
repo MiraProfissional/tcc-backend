@@ -24,4 +24,5 @@ export default Joi.object({
   MAIL_USERNAME: Joi.string().required(),
   MAIL_PASSWORD: Joi.string().required(),
   FRONTEND_URL: Joi.string().uri().required(),
+  CORS_ORIGINS: Joi.string().uri().optional(),
 });

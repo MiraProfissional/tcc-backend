@@ -35,15 +35,16 @@ async function bootstrap() {
     }),
   );
 
+  // Configuração de CORS com origens do .env
+  const corsOrigins = process.env.CORS_ORIGINS
+    ? process.env.CORS_ORIGINS.split(',').map((origin) => origin.trim())
+    : ['http://localhost:5173', 'http://localhost:3000'];
+
   app.enableCors({
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:3000',
-      'http://192.168.1.108:5173',
-    ],
+    origin: [corsOrigins, 'http://localhost:5173'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', ,],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
   await app.listen(3000);
